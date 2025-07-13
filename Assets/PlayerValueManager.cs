@@ -1,10 +1,8 @@
 using UnityEngine;
-public class PlayerValueManager
+public static class PlayerValueManager
 {
-    public float Health;
+    public static float Health = 100;
+    public static int HandSize = 10;
 
-    void Start()
-    {
-        Health = 100f;
-    }
+    
 }
