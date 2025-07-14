@@ -3,6 +3,7 @@ using UnityEngine;
 public class CardInteractions : MonoBehaviour
 {
     private bool isDragging = false;
+    private bool isSelected = false;
     private Vector2 destination;
     private Vector3 dragOffset;
     private Vector3 mouseDownPosition;
@@ -62,7 +63,8 @@ public class CardInteractions : MonoBehaviour
     
     void HandleClick()
     {
-        Debug.Log("Card clicked without dragging!");
+        isSelected = !isSelected;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = isSelected;
     }
 
     private Vector3 GetMouseWorldPosition()
