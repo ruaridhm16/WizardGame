@@ -11,3 +11,12 @@
     visibility: visible;
     display: none;
 }
+
+.death-panel {
+    opacity: 0;                     
+    transition: opacity 0.5s ease;  
+}
+
+.death-panel.show {
+    opacity: 1;                     
+}

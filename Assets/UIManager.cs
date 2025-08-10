@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,6 +16,10 @@ public class UIManager : MonoBehaviour
     private Button settingsButton;
     private Button quitButton;
 
+    // Death UI
+    private VisualElement gameOverPanel;   // UXML: name = "DeathPanel" (class: death-panel)
+    private Button retryButton;            // UXML: name = "Retry"
+
     [SerializeField] private UIDocument uiDocument;
     private VisualElement root;
 
@@ -25,9 +30,11 @@ public class UIManager : MonoBehaviour
     private float displayedHealthBarWidth;
     private float displayedMana;
 
+    private bool gameOverShown = false;
+
     private void Awake()
     {
-        root = uiDocument.rootVisualElement;
+        root = uiDocument.rootVisualElement; // get root from UIDocument
     }
 
     private void OnEnable()
@@ -45,16 +52,37 @@ public class UIManager : MonoBehaviour
         opponentHealthText = root.Q<Label>("OpponentHealthText");
 
         settingsButton = root.Q<Button>("Settings");
-        settingsButton.clicked += OnSettingsButtonClicked;
+        if (settingsButton != null) settingsButton.clicked += OnSettingsButtonClicked;
 
         quitButton = root.Q<Button>("QuitGame");
-        quitButton.clicked += OnQuitButtonClicked;
+        if (quitButton != null) quitButton.clicked += OnQuitButtonClicked;
+
+        // Death panel + retry
+        gameOverPanel = root.Q<VisualElement>("DeathPanel");
+        retryButton = root.Q<Button>("Retry");
+
+        if (gameOverPanel != null)
+        {
+            // Start hidden and at opacity 0 (USS .death-panel handles opacity)
+            gameOverPanel.style.display = DisplayStyle.None; // hidden from layout
+            gameOverPanel.RemoveFromClassList("show");       // ensure starts at opacity 0
+            gameOverPanel.pickingMode = PickingMode.Ignore;  // not clickable while hidden
+        }
+
+        if (retryButton != null)
+        {
+            retryButton.clicked -= OnRetryClicked;
+            retryButton.clicked += OnRetryClicked;
+        }
 
         // Initialize displayed values
         displayedHealth = PlayerValueManager.Health;
-        displayedHealthBarWidth = PlayerValueManager.Health / PlayerValueManager.MaxHealth;
+        displayedHealthBarWidth = PlayerValueManager.MaxHealth > 0
+            ? PlayerValueManager.Health / PlayerValueManager.MaxHealth
+            : 0f;
         displayedMana = PlayerValueManager.Mana;
         previousHealth = PlayerValueManager.Health;
+        gameOverShown = false;
     }
 
     private void Update()
@@ -64,39 +92,69 @@ public class UIManager : MonoBehaviour
         float currentMana = PlayerValueManager.Mana;
 
         // Trigger visual effect on damage
-        if (currentHealth < previousHealth)
+        if (!gameOverShown && currentHealth < previousHealth)
         {
-            TriggerEffect(playerHealthBG);
-            TriggerEffect(playerHealthBar);
+            if (playerHealthBG != null) TriggerEffect(playerHealthBG);
+            if (playerHealthBar != null) TriggerEffect(playerHealthBar);
         }
 
         // Smoothly interpolate values
         displayedHealth = Mathf.Lerp(displayedHealth, currentHealth, Time.deltaTime * 10f);
         displayedMana = Mathf.Lerp(displayedMana, currentMana, Time.deltaTime * 10f);
-        float targetWidth = Mathf.Clamp01(currentHealth / maxHealth);
+        float targetWidth = Mathf.Clamp01(maxHealth > 0 ? currentHealth / maxHealth : 0f);
         displayedHealthBarWidth = Mathf.Lerp(displayedHealthBarWidth, targetWidth, Time.deltaTime * 10f);
 
         UpdateHealthUI(maxHealth);
         UpdateManaUI();
 
+        // Show death panel with fade
+        if (!gameOverShown && currentHealth <= 0f)
+        {
+            ShowGameOver();
+        }
+
         previousHealth = currentHealth;
+    }
+
+    private void ShowGameOver()
+    {
+        gameOverShown = true;
+
+        if (gameOverPanel == null) return;
+
+        // 1) Put it in layout (still at opacity 0 due to missing 'show' class)
+        gameOverPanel.style.display = DisplayStyle.Flex;     // visible in layout
+        gameOverPanel.pickingMode = PickingMode.Ignore;      // ignore clicks until visible
+        gameOverPanel.RemoveFromClassList("show");           // ensure start state
+
+        // 2) Next frame, add 'show' class -> triggers opacity transition per USS
+        gameOverPanel.schedule.Execute(() =>
+        {
+            gameOverPanel.AddToClassList("show");            // opacity animates to 1
+            gameOverPanel.pickingMode = PickingMode.Position; // now interactable
+        }).StartingIn(0);
+
+        activeEffects.Clear();
     }
 
     private void UpdateHealthUI(float maxHealth)
     {
-        playerHealthText.text = $"{Mathf.RoundToInt(displayedHealth)}/{Mathf.RoundToInt(maxHealth)}";
-        playerHealthBar.style.width = new Length(displayedHealthBarWidth * 103f, LengthUnit.Percent);
+        if (playerHealthText != null)
+            playerHealthText.text = $"{Mathf.RoundToInt(displayedHealth)}/{Mathf.RoundToInt(maxHealth)}";
+
+        if (playerHealthBar != null)
+            playerHealthBar.style.width = new Length(displayedHealthBarWidth * 103f, LengthUnit.Percent);
     }
 
     private void UpdateManaUI()
     {
-        manaText.text = $"{Mathf.RoundToInt(displayedMana)}";
+        if (manaText != null)
+            manaText.text = $"{Mathf.RoundToInt(displayedMana)}";
     }
 
     public void TriggerEffect(VisualElement target)
     {
-        if (activeEffects.ContainsKey(target)) return;
-
+        if (target == null || activeEffects.ContainsKey(target)) return;
         Coroutine routine = StartCoroutine(FlashAndShake(target));
         activeEffects[target] = routine;
     }
@@ -161,5 +219,15 @@ public class UIManager : MonoBehaviour
     private void OnQuitButtonClicked()
     {
         Debug.Log("Quit button has been pressed!");
+    }
+
+    private void OnRetryClicked()
+    {
+        // Reset stats then reload scene
+        PlayerValueManager.Health = PlayerValueManager.MaxHealth;
+        PlayerValueManager.Mana = 0f;
+
+        Scene active = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(active.buildIndex);
     }
 }

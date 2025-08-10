@@ -24,6 +24,7 @@ public class DebugValueChanger : MonoBehaviour
     {
         if (!Application.isPlaying) return;
         if (autoApply) ApplyValuesToManager();
+        if (Input.GetKeyDown(KeyCode.Backspace)) InstaKill();
     }
 
     public void ApplyValuesToManager()
@@ -41,5 +42,10 @@ public class DebugValueChanger : MonoBehaviour
         maxHealth = PlayerValueManager.MaxHealth;
         mana = PlayerValueManager.Mana;
         handSize = PlayerValueManager.HandSize;
+    }
+
+    public void InstaKill()
+    {
+        PlayerValueManager.Health = 0f;
     }
 }

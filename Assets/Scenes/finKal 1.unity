@@ -952,7 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874b1a0d6a47b904daaeb0290351d30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 33
   maxHealth: 100
   mana: 100
   handSize: 10

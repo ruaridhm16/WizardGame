@@ -17,7 +17,7 @@ public static class PlayerValueManager
             if (health <= 0)
             {
                 Debug.Log("Player Died");
-                health = MaxHealth;
+                
             }
         }
     }
