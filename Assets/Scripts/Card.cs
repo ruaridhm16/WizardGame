@@ -7,5 +7,7 @@ public abstract class Card : ScriptableObject
     public Sprite cardFace;
     public Sprite cardBack;
     
+    public GameObject SpawnedPhysicalCard;
+
     public abstract void OnActivation();
 }

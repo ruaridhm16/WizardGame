@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CardView : MonoBehaviour
 {
 
-    private Card card;
+    public Card card;
 
     public void SetCard(Card cardData)
     {

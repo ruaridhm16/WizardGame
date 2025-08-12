@@ -6,7 +6,6 @@ public static class PlayerValueManager
     public static float MaxHealth = 100;
 
     private static float mana = 100;
-    public static int HandSize = 10;
 
     public static float Health
     {

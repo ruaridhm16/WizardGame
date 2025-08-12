@@ -7,9 +7,9 @@ public class DebugValueChanger : MonoBehaviour
     [Range(0, 100)] public float health = 100;
     [Range(0, 100)] public float maxHealth = 100;
     [Range(0, 100)] public float mana = 100;
-    [Range(1, 20)] public int handSize = 10;
 
-    [Header("Auto-Apply - updates PlayerValueManager every frame in play mode")]
+
+    [Header("Apply")]
     public bool autoApply = true;
 
     private void OnValidate()
@@ -32,16 +32,14 @@ public class DebugValueChanger : MonoBehaviour
         PlayerValueManager.MaxHealth = maxHealth;
         PlayerValueManager.Health = health;
         PlayerValueManager.Mana = mana;
-        PlayerValueManager.HandSize = handSize;
     }
 
     public void RefreshFromManager()
     {
-        // Optional reverse sync (not automatic)
+        //Reverse sync
         health = PlayerValueManager.Health;
         maxHealth = PlayerValueManager.MaxHealth;
         mana = PlayerValueManager.Mana;
-        handSize = PlayerValueManager.HandSize;
     }
 
     public void InstaKill()
