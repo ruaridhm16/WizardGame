@@ -21,5 +21,5 @@ public static class DeckManager
 
     //Discarded cards
     public static List<Card> Discards = new List<Card>();
-    
+
 }

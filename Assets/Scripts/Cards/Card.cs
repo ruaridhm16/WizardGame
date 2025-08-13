@@ -12,7 +12,7 @@ public abstract class Card : ScriptableObject
     public virtual void OnDraw() { }
     public virtual void OnDiscard() { }
 
-    
 
-    
+
+
 }
