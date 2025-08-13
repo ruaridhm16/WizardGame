@@ -5,7 +5,9 @@ public static class PlayerValueManager
     private static float health = 100;
     public static float MaxHealth = 100;
 
-    private static float mana = 100;
+    public static int handDrawSize = 7;
+
+    private static float mana = 10;
 
     public static float Health
     {

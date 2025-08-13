@@ -6,8 +6,13 @@ public abstract class Card : ScriptableObject
     public int manaCost;
     public Sprite cardFace;
     public Sprite cardBack;
-    
-    public GameObject SpawnedPhysicalCard;
 
+    [HideInInspector] public GameObject SpawnedPhysicalCard;
     public abstract void OnActivation();
+    public virtual void OnDraw() { }
+    public virtual void OnDiscard() { }
+
+    
+
+    
 }

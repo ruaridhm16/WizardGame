@@ -5,24 +5,48 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    [Header("InitialDeck")]
-    public List<Card> InitialDeck;
-    public GameObject HandZone;
-    public GameObject cardPrefab;
-    private HandManager HandManager;
+    public int numFireball;
+    public Fireball FireballSO;
+    public int numLifegel;
+    public Lifegel LifegelSO;
+    public int numManaberry;
+    public ManaBerry ManaBerrySO;
+
+    [SerializeField] private CardActions CardActions;
+    [SerializeField] private GameObject HandZone;
 
     void Start()
     {
-        HandManager = HandZone.GetComponent<HandManager>();
         DeckManager.HandZone = HandZone;
 
-        foreach (Card card in InitialDeck)
+        CardLibrary.Initialize();
+
+        StartBattle();
+    }
+
+    public void StartBattle()
+    {
+        //Add cards to the player's deck
+        for (int i=0; i<numFireball; i++)
         {
-            DeckManager.Deck.Add(card);
+            DeckManager.SetDeck.Add(FireballSO);
         }
+        for (int i=0; i<numLifegel; i++)
+        {
+            DeckManager.SetDeck.Add(LifegelSO);
+        }
+        for (int i=0; i<numManaberry; i++)
+        {
+            DeckManager.SetDeck.Add(ManaBerrySO);
+        }
+        DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 
-        StartCoroutine(HandManager.SpawnCards(cardPrefab, InitialDeck.Count));
+        StartCoroutine(CardActions.DrawInitialHand(PlayerValueManager.handDrawSize));
+    }
 
+    public IEnumerator ActiveBattle()
+    {
+        yield return new WaitForEndOfFrame();
     }
 
     

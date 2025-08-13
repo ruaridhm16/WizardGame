@@ -108,7 +108,6 @@ public class CardInteractions : MonoBehaviour
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = isSelected;
         DeckManager.SelectedCards.Remove(GetComponent<CardView>().card);
         DeckManager.SelectedPhysicalCards.Remove(gameObject);
-        print(DeckManager.SelectedCards.Count);
     }
 
     void HandleClick()
@@ -117,13 +116,11 @@ public class CardInteractions : MonoBehaviour
             transform.position -= new Vector3(0, 0.2f, 0);
             DeckManager.SelectedCards.Remove(GetComponent<CardView>().card);
             DeckManager.SelectedPhysicalCards.Remove(gameObject);
-            print(DeckManager.SelectedCards.Count);
         }
         else {
             transform.position += new Vector3(0, 0.2f, 0);
             DeckManager.SelectedCards.Add(GetComponent<CardView>().card);
             DeckManager.SelectedPhysicalCards.Add(gameObject);
-            print(DeckManager.SelectedCards.Count);
         }
         isSelected = !isSelected;
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = isSelected;

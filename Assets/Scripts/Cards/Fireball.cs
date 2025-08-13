@@ -1,12 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Cards/Fireball")]
+[CreateAssetMenu(fileName = "Fireball", menuName = "Cards/Fireball")]
 public class Fireball : Card
 {
-    public int damage;
+    public int damage = 5;
 
     public override void OnActivation()
     {
-        Debug.Log($"{cardName} deals {damage} damage!");
+        Debug.Log($"Fireball activated dealing {damage} damage!");
+        // Your actual damage logic here
     }
 }

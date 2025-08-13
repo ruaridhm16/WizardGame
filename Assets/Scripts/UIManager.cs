@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var label in root.Query<Label>().ToList())
         {
-            Debug.Log("Found label: " + label.name);
+            //Debug.Log("Found label: " + label.name);
         }
 
         playerHealthText = root.Q<Label>("PlayerHealthText");
@@ -226,6 +226,10 @@ public class UIManager : MonoBehaviour
         // Reset stats then reload scene
         PlayerValueManager.Health = PlayerValueManager.MaxHealth;
         PlayerValueManager.Mana = 0f;
+
+        DeckManager.Hand.Clear();
+        DeckManager.HandCards.Clear();
+        DeckManager.Deck.Clear();
 
         Scene active = SceneManager.GetActiveScene();
         SceneManager.LoadScene(active.buildIndex);

@@ -130,7 +130,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3845595278142565958}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f890d2ec360ab84eb5b8c1fa72a852b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  card: {fileID: 0}
 --- !u!61 &-4904689843900763360
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -248,4 +249,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce962a81106bba479bf7eab78df5611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDragging: 0
   dragThreshold: 0.1

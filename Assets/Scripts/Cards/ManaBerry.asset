@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c5ce663421d54548929cf8d80cc7959, type: 3}
-  m_Name: Mana_Berry
+  m_Name: ManaBerry
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: Mana Berry
   manaCost: 2
-  cardFace: {fileID: 8738707728633136614, guid: 058f2620d28e13e489aa17571aaf842f, type: 3}
+  cardFace: {fileID: 0}
   cardBack: {fileID: 0}
   SpawnedPhysicalCard: {fileID: 0}
   manaRegen: 2
