@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
+    public EnemyManager EnemyManager;
+
+
     public bool cardsSelected;
     public bool cardsDragging;
     public bool bindable = true;
@@ -120,8 +123,8 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        SelectCheck();
         ManaCostCheck();
+        SelectCheck();
 
         float currentHealth = PlayerValueManager.Health;
         float maxHealth = PlayerValueManager.MaxHealth;
@@ -173,6 +176,11 @@ public class UIManager : MonoBehaviour
             castExpensive = false;
             summonExpensive = false;
             bindExpensive = false;
+
+            if (PlayerValueManager.Mana < 2)
+            {
+                summonExpensive = true;
+            }
         }
         else
         {
@@ -187,10 +195,6 @@ public class UIManager : MonoBehaviour
             {
                 castExpensive = true;
                 bindExpensive = true;
-            }
-            else if (PlayerValueManager.Mana < 2)
-            {
-                summonExpensive = true;
             }
             else
             {
@@ -409,10 +413,12 @@ public class UIManager : MonoBehaviour
         if (space > 1 && cardsInDeck >= 2)
         {
             GetComponent<CardActions>().DrawNumCards(2);
+            PlayerValueManager.Mana -= 2;
         }
         else if (space == 1 || cardsInDeck == 1)
         {
             GetComponent<CardActions>().DrawNumCards(1);
+            PlayerValueManager.Mana -= 2;
         }
         else
         {
