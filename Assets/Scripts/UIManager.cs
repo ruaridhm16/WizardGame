@@ -8,9 +8,9 @@ public class UIManager : MonoBehaviour
 {
     public EnemyManager EnemyManager;
 
-
     public bool cardsSelected;
     public bool cardsDragging;
+    public bool turnActive;
     public bool bindable = true;
 
     public int castCost;
@@ -28,7 +28,9 @@ public class UIManager : MonoBehaviour
     private VisualElement playerHealthBar;
     private VisualElement playerHealthBG;
     private Label manaText;
+
     private VisualElement opponentHealthBar;
+    private VisualElement opponentHealthBG;
     private Label opponentHealthText;
 
     private Button settingsButton;
@@ -46,6 +48,10 @@ public class UIManager : MonoBehaviour
     private float displayedHealth;
     private float displayedHealthBarWidth;
     private float displayedMana;
+
+    private float previousEnemyHealth;
+    private float displayedEnemyHealth;
+    private float displayedEnemyHealthBarWidth;
 
     private bool gameOverShown = false;
 
@@ -77,7 +83,9 @@ public class UIManager : MonoBehaviour
         playerHealthBar = root.Q<VisualElement>("PlayerHealthBar");
         playerHealthBG = root.Q<VisualElement>("PlayerHealthBG");
         manaText = root.Q<Label>("ManaText");
+
         opponentHealthBar = root.Q<VisualElement>("OpponentHealthBar");
+        opponentHealthBG = root.Q<VisualElement>("OpponentHealthBG");
         opponentHealthText = root.Q<Label>("OpponentHealthText");
 
         settingsButton = root.Q<Button>("Settings");
@@ -105,6 +113,12 @@ public class UIManager : MonoBehaviour
             ? PlayerValueManager.Health / PlayerValueManager.MaxHealth : 0f;
         displayedMana = PlayerValueManager.Mana;
         previousHealth = PlayerValueManager.Health;
+
+        displayedEnemyHealth = EnemyManager.health;
+        displayedEnemyHealthBarWidth = EnemyManager.MaxHealth > 0
+            ? EnemyManager.health / EnemyManager.MaxHealth : 0f;
+        previousEnemyHealth = EnemyManager.health;
+
         gameOverShown = false;
 
         castButton = root.Q<Button>("CastButton");
@@ -130,10 +144,19 @@ public class UIManager : MonoBehaviour
         float maxHealth = PlayerValueManager.MaxHealth;
         float currentMana = PlayerValueManager.Mana;
 
+        float currentEnemyHealth = EnemyManager.health;
+        float maxEnemyHealth = EnemyManager.MaxHealth;
+
         if (!gameOverShown && currentHealth < previousHealth)
         {
             if (playerHealthBG != null) TriggerEffect(playerHealthBG);
             if (playerHealthBar != null) TriggerEffect(playerHealthBar);
+        }
+
+        if (currentEnemyHealth < previousEnemyHealth)
+        {
+            if (opponentHealthBG != null) TriggerEffect(opponentHealthBG);
+            if (opponentHealthBar != null) TriggerEffect(opponentHealthBar);
         }
 
         displayedHealth = Mathf.Lerp(displayedHealth, currentHealth, Time.deltaTime * 10f);
@@ -141,7 +164,12 @@ public class UIManager : MonoBehaviour
         float targetWidth = Mathf.Clamp01(maxHealth > 0 ? currentHealth / maxHealth : 0f);
         displayedHealthBarWidth = Mathf.Lerp(displayedHealthBarWidth, targetWidth, Time.deltaTime * 10f);
 
+        displayedEnemyHealth = Mathf.Lerp(displayedEnemyHealth, currentEnemyHealth, Time.deltaTime * 10f);
+        float targetEnemyWidth = Mathf.Clamp01(maxEnemyHealth > 0 ? currentEnemyHealth / maxEnemyHealth : 0f);
+        displayedEnemyHealthBarWidth = Mathf.Lerp(displayedEnemyHealthBarWidth, targetEnemyWidth, Time.deltaTime * 10f);
+
         UpdateHealthUI(maxHealth);
+        UpdateEnemyHealthUI(maxEnemyHealth);
         UpdateManaUI();
 
         if (!gameOverShown && currentHealth <= 0f) ShowGameOver();
@@ -149,75 +177,7 @@ public class UIManager : MonoBehaviour
         UpdateButtonsNow();
         UpdateCostsNow();
         previousHealth = currentHealth;
-    }
-
-    void SelectCheck()
-    {
-        if (DeckManager.SelectedCards.Count == 0)
-        {
-            cardsSelected = false;
-            bindable = true;
-        }
-        else if (DeckManager.SelectedCards.Count >= 4)
-        {
-            cardsSelected = true;
-            bindable = false;
-        }
-        else
-        {
-            cardsSelected = true;
-            bindable = true;
-        }
-    }
-    void ManaCostCheck()
-    {
-        if (DeckManager.SelectedCards.Count == 0)
-        {
-            castExpensive = false;
-            summonExpensive = false;
-            bindExpensive = false;
-
-            if (PlayerValueManager.Mana < 2)
-            {
-                summonExpensive = true;
-            }
-        }
-        else
-        {
-            int total = 0;
-            foreach (Card card in DeckManager.SelectedCards)
-            {
-                total += card.manaCost;
-            }
-            bindCost = total;
-            castCost = total;
-            if (total > PlayerValueManager.Mana)
-            {
-                castExpensive = true;
-                bindExpensive = true;
-            }
-            else
-            {
-                castExpensive = false;
-                summonExpensive = false;
-                bindExpensive = false;
-            }
-        }
-    }
-
-    private void ShowGameOver()
-    {
-        gameOverShown = true;
-        if (gameOverPanel == null) return;
-        gameOverPanel.style.display = DisplayStyle.Flex;
-        gameOverPanel.pickingMode = PickingMode.Ignore;
-        gameOverPanel.RemoveFromClassList("show");
-        gameOverPanel.schedule.Execute(() =>
-        {
-            gameOverPanel.AddToClassList("show");
-            gameOverPanel.pickingMode = PickingMode.Position;
-        }).StartingIn(0);
-        activeEffects.Clear();
+        previousEnemyHealth = currentEnemyHealth;
     }
 
     private void UpdateHealthUI(float maxHealth)
@@ -226,6 +186,14 @@ public class UIManager : MonoBehaviour
             playerHealthText.text = $"{Mathf.RoundToInt(displayedHealth)}/{Mathf.RoundToInt(maxHealth)}";
         if (playerHealthBar != null)
             playerHealthBar.style.width = new Length(displayedHealthBarWidth * 103f, LengthUnit.Percent);
+    }
+
+    private void UpdateEnemyHealthUI(float maxHealth)
+    {
+        if (opponentHealthText != null)
+            opponentHealthText.text = $"{Mathf.RoundToInt(displayedEnemyHealth)}/{Mathf.RoundToInt(maxHealth)}";
+        if (opponentHealthBar != null)
+            opponentHealthBar.style.width = new Length(displayedEnemyHealthBarWidth * 103f, LengthUnit.Percent);
     }
 
     private void UpdateManaUI()
@@ -293,6 +261,76 @@ public class UIManager : MonoBehaviour
         activeEffects.Remove(target);
     }
 
+    private void ShowGameOver()
+    {
+        gameOverShown = true;
+        if (gameOverPanel == null) return;
+        gameOverPanel.style.display = DisplayStyle.Flex;
+        gameOverPanel.pickingMode = PickingMode.Ignore;
+        gameOverPanel.RemoveFromClassList("show");
+        gameOverPanel.schedule.Execute(() =>
+        {
+            gameOverPanel.AddToClassList("show");
+            gameOverPanel.pickingMode = PickingMode.Position;
+        }).StartingIn(0);
+        activeEffects.Clear();
+    }
+
+    void SelectCheck()
+    {
+        if (DeckManager.SelectedCards.Count == 0)
+        {
+            cardsSelected = false;
+            bindable = true;
+        }
+        else if (DeckManager.SelectedCards.Count >= 4)
+        {
+            cardsSelected = true;
+            bindable = false;
+        }
+        else
+        {
+            cardsSelected = true;
+            bindable = true;
+        }
+    }
+
+    void ManaCostCheck()
+    {
+        if (DeckManager.SelectedCards.Count == 0)
+        {
+            castExpensive = false;
+            summonExpensive = false;
+            bindExpensive = false;
+
+            if (PlayerValueManager.Mana < 2)
+            {
+                summonExpensive = true;
+            }
+        }
+        else
+        {
+            int total = 0;
+            foreach (Card card in DeckManager.SelectedCards)
+            {
+                total += card.manaCost;
+            }
+            bindCost = total;
+            castCost = total;
+            if (total > PlayerValueManager.Mana)
+            {
+                castExpensive = true;
+                bindExpensive = true;
+            }
+            else
+            {
+                castExpensive = false;
+                summonExpensive = false;
+                bindExpensive = false;
+            }
+        }
+    }
+
     private void OnSettingsButtonClicked() { Debug.Log("Settings pressed"); }
     private void OnQuitButtonClicked() { Debug.Log("Quit pressed"); }
     private void OnRetryClicked()
@@ -332,7 +370,7 @@ public class UIManager : MonoBehaviour
     {
         if (castButton == null || bindButton == null || summonButton == null) return;
 
-        if (cardsDragging)
+        if (cardsDragging || !turnActive)
         {
             Show(castButton, false);
             Show(bindButton, false);
@@ -407,7 +445,8 @@ public class UIManager : MonoBehaviour
 
     private void OnCast() { GetComponent<CardActions>().CastSelectedCards(); }
     private void OnBind() { Debug.Log("Bind pressed"); }
-    private void OnSummon() {
+    private void OnSummon()
+    {
         int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
         int cardsInDeck = DeckManager.Deck.Count;
         if (space > 1 && cardsInDeck >= 2)
@@ -423,5 +462,6 @@ public class UIManager : MonoBehaviour
         else
         {
             print("no room or no cards");
-        } }
+        }
+    }
 }

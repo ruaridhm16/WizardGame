@@ -1,10 +1,11 @@
 .unity-button:hover {
     scale: 1.2 1.2;
-    transition-property: scale, translate;
-    transition-duration: 0.25s, 0.25s;
-    transition-timing-function: ease, ease;
+    transition-property: scale, translate, color;
+    transition-duration: 0.25s, 0.25s, 0.25s;
+    transition-timing-function: ease, ease, ease;
     translate: 0 -3px;
     transform-origin: center;
+    color: rgb(255, 255, 255);
 }
 
 .hidden {
