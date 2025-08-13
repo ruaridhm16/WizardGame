@@ -266,7 +266,6 @@ public class UIManager : MonoBehaviour
             text = b.resolvedStyle.color
         };
         original[b] = skin;
-        Debug.Log($"{label} tint #{ColorUtility.ToHtmlStringRGBA(skin.tint)} text #{ColorUtility.ToHtmlStringRGBA(skin.text)}");
     }
 
     private void UpdateButtonsNow()
