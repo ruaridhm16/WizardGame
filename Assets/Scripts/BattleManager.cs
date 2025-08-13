@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ public class BattleManager : MonoBehaviour
     public EnchantedMirror EnchantedMirrorSO;
     public int numDarkOrb;
     public DarkOrb DarkOrbSO;
+    public int numThornSwarm;
+    public ThornSwarm ThrornSwarmSO;
 
     [SerializeField] private CardActions CardActions;
     [SerializeField] private GameObject HandZone;
@@ -32,34 +35,25 @@ public class BattleManager : MonoBehaviour
 
     public void StartBattle()
     {
-        //Add cards to the player's deck
-        for (int i=0; i<numFireball; i++)
-        {
-            DeckManager.SetDeck.Add(FireballSO);
-        }
-        for (int i=0; i<numLifegel; i++)
-        {
-            DeckManager.SetDeck.Add(LifegelSO);
-        }
-        for (int i=0; i<numManaberry; i++)
-        {
-            DeckManager.SetDeck.Add(ManaBerrySO);
-        }
-        for (int i=0; i<numThunderStrike; i++)
-        {
-            DeckManager.SetDeck.Add(ThunderStrikeSO);
-        }
-        for (int i=0; i<numEnchantedMirror; i++)
-        {
-            DeckManager.SetDeck.Add(EnchantedMirrorSO);
-        }
-        for (int i=0; i<numDarkOrb; i++)
-        {
-            DeckManager.SetDeck.Add(DarkOrbSO);
-        }
+        
+        AddNumCards(numFireball, FireballSO);
+        AddNumCards(numLifegel, LifegelSO);
+        AddNumCards(numManaberry, ManaBerrySO);
+        AddNumCards(numDarkOrb, DarkOrbSO);
+        AddNumCards(numThunderStrike, ThunderStrikeSO);
+        AddNumCards(numEnchantedMirror, EnchantedMirrorSO);
+        AddNumCards(numThornSwarm, ThrornSwarmSO);
+
         DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 
         StartCoroutine(CardActions.DrawInitialHand(PlayerValueManager.handDrawSize));
+    }
+
+    public void AddNumCards(int num, Card card) {
+        for (int i = 0; i < num; i++)
+        {
+            DeckManager.SetDeck.Add(card);
+        }
     }
 
     public IEnumerator ActiveBattle()
