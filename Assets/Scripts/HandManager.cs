@@ -42,7 +42,4 @@ public class HandManager : MonoBehaviour
             handZoneCollider.size = new Vector2(boxUnit * numCards + ((10-numCards) * 0.4f), handZoneCollider.size.y);
         }
     }
-
-    
-        
 }

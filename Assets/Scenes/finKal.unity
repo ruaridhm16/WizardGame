@@ -750,6 +750,8 @@ MonoBehaviour:
   LifegelSO: {fileID: 11400000, guid: 1da996c8454524848a229646077adce0, type: 2}
   numManaberry: 5
   ManaBerrySO: {fileID: 11400000, guid: eb9df33c2f52a9843a7c0b6f72fd6477, type: 2}
+  numThunderStrike: 3
+  ThunderStrikeSO: {fileID: 11400000, guid: e91b14a0f91faa8419b0ab671f310503, type: 2}
   CardActions: {fileID: 1117104887}
   HandZone: {fileID: 220450780}
 --- !u!4 &1117104884

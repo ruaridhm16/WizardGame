@@ -11,6 +11,8 @@ public class BattleManager : MonoBehaviour
     public Lifegel LifegelSO;
     public int numManaberry;
     public ManaBerry ManaBerrySO;
+    public int numThunderStrike;
+    public ThunderStrike ThunderStrikeSO;
 
     [SerializeField] private CardActions CardActions;
     [SerializeField] private GameObject HandZone;
@@ -38,6 +40,10 @@ public class BattleManager : MonoBehaviour
         for (int i=0; i<numManaberry; i++)
         {
             DeckManager.SetDeck.Add(ManaBerrySO);
+        }
+        for (int i=0; i<numThunderStrike; i++)
+        {
+            DeckManager.SetDeck.Add(ThunderStrikeSO);
         }
         DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 
