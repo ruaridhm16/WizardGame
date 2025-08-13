@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Fireball
   manaCost: 2
-  cardFace: {fileID: 0}
-  cardBack: {fileID: 0}
+  cardFace: {fileID: 2429319946959866025, guid: 2ed167a208e12cf4594867c3be2d7f00, type: 3}
+  cardBack: {fileID: 2429319946959866025, guid: 2ed167a208e12cf4594867c3be2d7f00, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
+  damage: 2

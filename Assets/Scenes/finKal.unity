@@ -724,6 +724,7 @@ GameObject:
   - component: {fileID: 1117104883}
   - component: {fileID: 1117104886}
   - component: {fileID: 1117104885}
+  - component: {fileID: 1117104887}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -743,17 +744,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def54c69b0439ac41b1469887e4a509e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialDeck:
-  - {fileID: 11400000, guid: 0e4fc9f4b74059f478160019dc2aeea2, type: 2}
-  - {fileID: 11400000, guid: 0e4fc9f4b74059f478160019dc2aeea2, type: 2}
-  - {fileID: 11400000, guid: 0e4fc9f4b74059f478160019dc2aeea2, type: 2}
-  - {fileID: 11400000, guid: e5e48aeb88eaec844b8fde2ea665680a, type: 2}
-  - {fileID: 11400000, guid: e5e48aeb88eaec844b8fde2ea665680a, type: 2}
-  - {fileID: 11400000, guid: e5e48aeb88eaec844b8fde2ea665680a, type: 2}
-  - {fileID: 11400000, guid: 1da996c8454524848a229646077adce0, type: 2}
-  - {fileID: 11400000, guid: 1da996c8454524848a229646077adce0, type: 2}
+  numFireball: 10
+  FireballSO: {fileID: 11400000, guid: e5e48aeb88eaec844b8fde2ea665680a, type: 2}
+  numLifegel: 8
+  LifegelSO: {fileID: 11400000, guid: 1da996c8454524848a229646077adce0, type: 2}
+  numManaberry: 5
+  ManaBerrySO: {fileID: 11400000, guid: eb9df33c2f52a9843a7c0b6f72fd6477, type: 2}
+  CardActions: {fileID: 1117104887}
   HandZone: {fileID: 220450780}
-  cardPrefab: {fileID: 3845595278142565958, guid: 3671adc888b61bc459a2d5404e46324d, type: 3}
 --- !u!4 &1117104884
 Transform:
   m_ObjectHideFlags: 0
@@ -798,6 +796,19 @@ MonoBehaviour:
   maxHealth: 20
   mana: 6
   autoApply: 1
+--- !u!114 &1117104887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117104882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337c501d4cecb0e4d8005d54371176c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 3845595278142565958, guid: 3671adc888b61bc459a2d5404e46324d, type: 3}
 --- !u!1 &1205380952
 GameObject:
   m_ObjectHideFlags: 0

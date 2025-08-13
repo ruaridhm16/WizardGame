@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Lifegel
   manaCost: 3
-  cardFace: {fileID: 0}
-  cardBack: {fileID: 0}
+  cardFace: {fileID: 393152454190485466, guid: f16c9a2c5505a86439a3a81a8739bbf5, type: 3}
+  cardBack: {fileID: 393152454190485466, guid: f16c9a2c5505a86439a3a81a8739bbf5, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
   healAmount: 5

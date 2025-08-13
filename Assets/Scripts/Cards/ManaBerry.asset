@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Mana Berry
   manaCost: 2
-  cardFace: {fileID: 0}
-  cardBack: {fileID: 0}
+  cardFace: {fileID: 8738707728633136614, guid: 058f2620d28e13e489aa17571aaf842f, type: 3}
+  cardBack: {fileID: 8738707728633136614, guid: 058f2620d28e13e489aa17571aaf842f, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
-  manaRegen: 2
+  manaGeneration: 5
