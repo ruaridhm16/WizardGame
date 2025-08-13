@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public bool bindable = true;
 
     public int castCost;
-    public int summonCost;
+    public int summonCost = 2;
     public int bindCost;
 
     public bool castExpensive;
@@ -120,6 +120,9 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        SelectCheck();
+        ManaCostCheck();
+
         float currentHealth = PlayerValueManager.Health;
         float maxHealth = PlayerValueManager.MaxHealth;
         float currentMana = PlayerValueManager.Mana;
@@ -143,6 +146,59 @@ public class UIManager : MonoBehaviour
         UpdateButtonsNow();
         UpdateCostsNow();
         previousHealth = currentHealth;
+    }
+
+    void SelectCheck()
+    {
+        if (DeckManager.SelectedCards.Count == 0)
+        {
+            cardsSelected = false;
+            bindable = true;
+        }
+        else if (DeckManager.SelectedCards.Count >= 4)
+        {
+            cardsSelected = true;
+            bindable = false;
+        }
+        else
+        {
+            cardsSelected = true;
+            bindable = true;
+        }
+    }
+    void ManaCostCheck()
+    {
+        if (DeckManager.SelectedCards.Count == 0)
+        {
+            castExpensive = false;
+            summonExpensive = false;
+            bindExpensive = false;
+        }
+        else
+        {
+            int total = 0;
+            foreach (Card card in DeckManager.SelectedCards)
+            {
+                total += card.manaCost;
+            }
+            bindCost = total;
+            castCost = total;
+            if (total > PlayerValueManager.Mana)
+            {
+                castExpensive = true;
+                bindExpensive = true;
+            }
+            else if (PlayerValueManager.Mana < 2)
+            {
+                summonExpensive = true;
+            }
+            else
+            {
+                castExpensive = false;
+                summonExpensive = false;
+                bindExpensive = false;
+            }
+        }
     }
 
     private void ShowGameOver()
@@ -345,7 +401,21 @@ public class UIManager : MonoBehaviour
         l.style.color = expensive ? Color.red : Color.white;
     }
 
-    private void OnCast() { Debug.Log("Cast pressed"); }
+    private void OnCast() { GetComponent<CardActions>().CastSelectedCards(); }
     private void OnBind() { Debug.Log("Bind pressed"); }
-    private void OnSummon() { Debug.Log("Summon pressed"); }
+    private void OnSummon() {
+        int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
+        int cardsInDeck = DeckManager.Deck.Count;
+        if (space > 1 && cardsInDeck >= 2)
+        {
+            GetComponent<CardActions>().DrawNumCards(2);
+        }
+        else if (space == 1 || cardsInDeck == 1)
+        {
+            GetComponent<CardActions>().DrawNumCards(1);
+        }
+        else
+        {
+            print("no room or no cards");
+        } }
 }

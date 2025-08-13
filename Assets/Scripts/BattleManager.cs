@@ -13,6 +13,10 @@ public class BattleManager : MonoBehaviour
     public ManaBerry ManaBerrySO;
     public int numThunderStrike;
     public ThunderStrike ThunderStrikeSO;
+    public int numEnchantedMirror;
+    public EnchantedMirror EnchantedMirrorSO;
+    public int numDarkOrb;
+    public DarkOrb DarkOrbSO;
 
     [SerializeField] private CardActions CardActions;
     [SerializeField] private GameObject HandZone;
@@ -44,6 +48,14 @@ public class BattleManager : MonoBehaviour
         for (int i=0; i<numThunderStrike; i++)
         {
             DeckManager.SetDeck.Add(ThunderStrikeSO);
+        }
+        for (int i=0; i<numEnchantedMirror; i++)
+        {
+            DeckManager.SetDeck.Add(EnchantedMirrorSO);
+        }
+        for (int i=0; i<numDarkOrb; i++)
+        {
+            DeckManager.SetDeck.Add(DarkOrbSO);
         }
         DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 

@@ -56,7 +56,26 @@ public class CardActions : MonoBehaviour
 
     public void CastSelectedCards()
     {
+        int total = 0;
+        foreach (Card card in DeckManager.SelectedCards)
+        {
+            total += card.manaCost;
+        }
 
+
+        foreach (GameObject physicalCard in DeckManager.SelectedPhysicalCards)
+        {
+            Card card = physicalCard.GetComponent<CardView>().card;
+
+            DeckManager.Hand.Remove(card);
+            DeckManager.HandCards.Remove(physicalCard);
+            Destroy(physicalCard);
+        }
+        DeckManager.SelectedCards.Clear();
+        DeckManager.SelectedPhysicalCards.Clear();
+        DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
+
+        PlayerValueManager.Mana -= total;
     }
 
     public void BindSelectedCards()
