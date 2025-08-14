@@ -24,6 +24,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private CardActions CardActions;
     [SerializeField] private GameObject HandZone;
 
+    public bool playerTurn;
+    public bool previousPlayerTurn;
+
     void Start()
     {
         DeckManager.HandZone = HandZone;
@@ -32,6 +35,19 @@ public class BattleManager : MonoBehaviour
 
         StartBattle();
     }
+
+    private void Update()
+    {
+        if (previousPlayerTurn == false && playerTurn == true) { NewTurn(); };
+        previousPlayerTurn = playerTurn;
+        
+    }
+
+    public void NewTurn()
+    {
+        GetComponent<UIManager>().turnActive = true;
+    }
+
 
     public void StartBattle()
     {

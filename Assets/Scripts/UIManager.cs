@@ -131,6 +131,9 @@ public class UIManager : MonoBehaviour
 
         WireActionButtons();
         CaptureAndLogColors();
+
+        RefreshSummonable();
+
         UpdateButtonsNow();
         UpdateCostsNow();
     }
@@ -139,6 +142,8 @@ public class UIManager : MonoBehaviour
     {
         ManaCostCheck();
         SelectCheck();
+
+        RefreshSummonable();
 
         float currentHealth = PlayerValueManager.Health;
         float maxHealth = PlayerValueManager.MaxHealth;
@@ -178,6 +183,13 @@ public class UIManager : MonoBehaviour
         UpdateCostsNow();
         previousHealth = currentHealth;
         previousEnemyHealth = currentEnemyHealth;
+    }
+
+    private void RefreshSummonable()
+    {
+        int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
+        int cardsInDeck = DeckManager.Deck.Count;
+        summonable = (space > 0 && cardsInDeck > 0);
     }
 
     private void UpdateHealthUI(float maxHealth)
@@ -443,25 +455,24 @@ public class UIManager : MonoBehaviour
         l.style.color = expensive ? Color.red : Color.white;
     }
 
-    private void OnCast() { GetComponent<CardActions>().CastSelectedCards(); }
-    private void OnBind() { Debug.Log("Bind pressed"); }
+    private void OnCast()
+    {
+        GetComponent<CardActions>().CastSelectedCards();
+        turnActive = false;
+    }
+
+    private void OnBind()
+    {
+        GetComponent<CardActions>().BindSelectedCards();
+        turnActive = false;
+    }
+
     private void OnSummon()
     {
         int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
         int cardsInDeck = DeckManager.Deck.Count;
-        if (space > 1 && cardsInDeck >= 2)
-        {
-            GetComponent<CardActions>().DrawNumCards(2);
-            PlayerValueManager.Mana -= 2;
-        }
-        else if (space == 1 || cardsInDeck == 1)
-        {
-            GetComponent<CardActions>().DrawNumCards(1);
-            PlayerValueManager.Mana -= 2;
-        }
-        else
-        {
-            print("no room or no cards");
-        }
+
+        GetComponent<CardActions>().SummonCards(space, cardsInDeck);
+        turnActive = false;
     }
 }

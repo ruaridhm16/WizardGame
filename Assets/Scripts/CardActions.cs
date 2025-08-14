@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.Splines.SplineInstantiate;
 
 public class CardActions : MonoBehaviour
 {
@@ -76,10 +77,55 @@ public class CardActions : MonoBehaviour
         DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
 
         PlayerValueManager.Mana -= total;
+
+        // Play card casting animation 
+
+
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
     }
 
     public void BindSelectedCards()
     {
-        
+        int total = 0;
+        foreach (Card card in DeckManager.SelectedCards)
+        {
+            total += card.manaCost;
+        }
+
+
+        foreach (GameObject physicalCard in DeckManager.SelectedPhysicalCards)
+        {
+            Card card = physicalCard.GetComponent<CardView>().card;
+
+            DeckManager.Hand.Remove(card);
+            DeckManager.HandCards.Remove(physicalCard);
+            Destroy(physicalCard);
+        }
+        DeckManager.SelectedCards.Clear();
+        DeckManager.SelectedPhysicalCards.Clear();
+        DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
+
+        PlayerValueManager.Mana -= total;
+
+        // Play card binding animation 
+
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
     }
+    public void SummonCards( int space, int cardsInDeck)
+    {
+        if (space > 1 && cardsInDeck >= 2)
+        {
+            GetComponent<CardActions>().DrawNumCards(2);
+            PlayerValueManager.Mana -= 2;
+        }
+        else if (space == 1 || cardsInDeck == 1)
+        {
+            GetComponent<CardActions>().DrawNumCards(1);
+            PlayerValueManager.Mana -= 2;
+        }
+
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
+    }
+
+
 }
