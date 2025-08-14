@@ -4,31 +4,14 @@ using UnityEngine;
 
 public class BindSlot : MonoBehaviour
 {
-    public bool occupied = false;
-    public bool disabled = false;
-    public GameObject boundCard;
-    public BattleManager BattleManager;
-    public bool lastFramePlayerTurn;
+    [HideInInspector] public bool occupied = false;
+    [HideInInspector] public bool disabled = false;
+    [HideInInspector] public Card boundCard;
     void Start()
     {
-        BattleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
-        lastFramePlayerTurn = BattleManager.playerTurn;
+        DeckManager.BoundSlots.Add(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        boundCard = (transform.childCount > 0) ? transform.GetChild(0).gameObject : null;
-        if (boundCard != null) { occupied = true; }
-    
-        if (lastFramePlayerTurn == true && BattleManager.playerTurn == false && !disabled)
-        {
-            OnTurnEnd();
-        }
-
-        lastFramePlayerTurn = BattleManager.playerTurn;
-
-    }
 
     private void OnTurnEnd()
     {

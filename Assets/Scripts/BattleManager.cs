@@ -27,6 +27,21 @@ public class BattleManager : MonoBehaviour
     public bool playerTurn;
     public bool previousPlayerTurn;
 
+    public enum BattlePhase
+    {
+        PlayerTurn,
+        PlayerTurnAnimations,
+        PlayerPostTurn,
+        
+        OpponentTurn,
+        OpponentTurnAnimations,
+        OpponentPostTurn,
+        
+        PostRound
+    }
+
+    public BattlePhase phase = BattlePhase.PlayerTurn;
+
     void Start()
     {
         DeckManager.HandZone = HandZone;
@@ -72,10 +87,65 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void nextPhase()
+    {
+        switch (phase)
+        {
+            case BattlePhase.PlayerTurn:
+                phase = BattlePhase.PlayerTurnAnimations;
+                break;
+            case BattlePhase.PlayerTurnAnimations:
+                phase = BattlePhase.PlayerPostTurn;
+                break;
+            case BattlePhase.PlayerPostTurn:
+                phase = BattlePhase.OpponentTurn;
+                break;
+            case BattlePhase.OpponentTurn:
+                phase = BattlePhase.OpponentTurnAnimations;
+                break;
+            case BattlePhase.OpponentTurnAnimations:
+                phase = BattlePhase.OpponentPostTurn;
+                break;
+            case BattlePhase.OpponentPostTurn:
+                phase = BattlePhase.PostRound;
+                break;
+            case BattlePhase.PostRound:
+                phase = BattlePhase.PlayerTurn;
+                break;
+
+        }
+    }
+
     public IEnumerator ActiveBattle()
     {
+        switch (phase) {
+            case BattlePhase.PlayerTurn:
+                //wait for player move
+                break;
+            case BattlePhase.PlayerTurnAnimations:
+                //wait for player move
+                break;
+            case BattlePhase.PlayerPostTurn:
+                //wait for player move
+                break;
+            case BattlePhase.OpponentTurn:
+                //wait for player move
+                break;
+            case BattlePhase.OpponentTurnAnimations:
+                //wait for player move
+                break;
+            case BattlePhase.OpponentPostTurn:
+                //wait for player move
+                break;
+            case BattlePhase.PostRound:
+                //post round
+                break;
+
+        }
+
         yield return new WaitForEndOfFrame();
     }
 
     
 }
+

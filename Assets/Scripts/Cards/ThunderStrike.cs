@@ -5,7 +5,7 @@ public class ThunderStrike : Card
 {
     public int damage = 8;
 
-    public override void OnActivation()
+    public override void OnCast()
     {
         Debug.Log($"Fireball activated dealing {damage} damage!");
         // Your actual damage logic here

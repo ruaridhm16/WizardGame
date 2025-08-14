@@ -10,11 +10,15 @@ public class CardInteractions : MonoBehaviour
     private Vector3 dragOffset;
     private Vector3 mouseDownPosition;
 
+    public bool isInteractible = true;
+
     [Header("Config")]
     public float dragThreshold = 0.15f;
 
     void OnMouseDown()
     {
+        if (!isInteractible) { return; }
+
         mouseDownPosition = GetMouseWorldPosition();
     }
 
@@ -43,6 +47,8 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseDrag()
     {
+        if (!isInteractible) { return; }
+
         Vector3 currentMouse = GetMouseWorldPosition();
         float distance = Vector3.Distance(mouseDownPosition, currentMouse);
 
@@ -76,6 +82,8 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (!isInteractible) { return; }
+
         if (isDragging)
         {
             DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();

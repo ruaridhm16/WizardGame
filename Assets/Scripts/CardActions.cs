@@ -87,19 +87,35 @@ public class CardActions : MonoBehaviour
     public void BindSelectedCards()
     {
         int total = 0;
+
         foreach (Card card in DeckManager.SelectedCards)
         {
             total += card.manaCost;
         }
 
+        int numSelected = DeckManager.SelectedCards.Count;
 
-        foreach (GameObject physicalCard in DeckManager.SelectedPhysicalCards)
+        for (int i = 0; i < numSelected; i++)
         {
+            GameObject physicalCard = DeckManager.SelectedPhysicalCards[0];
             Card card = physicalCard.GetComponent<CardView>().card;
 
             DeckManager.Hand.Remove(card);
             DeckManager.HandCards.Remove(physicalCard);
-            Destroy(physicalCard);
+
+            GameObject targetParent = DeckManager.BoundSlots.Find(o => o.GetComponent<BindSlot>().occupied == false);
+            physicalCard.transform.parent = targetParent.transform;
+            physicalCard.transform.localPosition = Vector3.zero;
+            physicalCard.transform.localScale = Vector3.one;
+            targetParent.GetComponent<BindSlot>().occupied = true;
+            targetParent.GetComponent<BindSlot>().boundCard = card;
+
+            physicalCard.GetComponent<CardInteractions>().Deselect();
+            physicalCard.GetComponent<CardInteractions>().isInteractible=false;
+            DeckManager.SelectedPhysicalCards.Remove(physicalCard);
+            DeckManager.SelectedCards.Remove(card);
+
+
         }
         DeckManager.SelectedCards.Clear();
         DeckManager.SelectedPhysicalCards.Clear();
@@ -111,6 +127,7 @@ public class CardActions : MonoBehaviour
 
         GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
     }
+
     public void SummonCards( int space, int cardsInDeck)
     {
         if (space > 1 && cardsInDeck >= 2)

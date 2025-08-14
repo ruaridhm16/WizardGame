@@ -133,6 +133,7 @@ public class UIManager : MonoBehaviour
         CaptureAndLogColors();
 
         RefreshSummonable();
+        RefreshBindable();
 
         UpdateButtonsNow();
         UpdateCostsNow();
@@ -144,6 +145,7 @@ public class UIManager : MonoBehaviour
         SelectCheck();
 
         RefreshSummonable();
+        RefreshBindable();
 
         float currentHealth = PlayerValueManager.Health;
         float maxHealth = PlayerValueManager.MaxHealth;
@@ -190,6 +192,23 @@ public class UIManager : MonoBehaviour
         int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
         int cardsInDeck = DeckManager.Deck.Count;
         summonable = (space > 0 && cardsInDeck > 0);
+    }
+
+    private void RefreshBindable()
+    {
+        int selectedCount = DeckManager.SelectedCards.Count;
+        int freeSlots = 0;
+
+        foreach (var slot in DeckManager.BoundSlots)
+        {
+            var slotData = slot.GetComponent<BindSlot>();
+            if (slotData != null && !slotData.occupied)
+            {
+                freeSlots++;
+            }
+        }
+
+        bindable = (freeSlots >= selectedCount && selectedCount > 0);
     }
 
     private void UpdateHealthUI(float maxHealth)
@@ -290,21 +309,7 @@ public class UIManager : MonoBehaviour
 
     void SelectCheck()
     {
-        if (DeckManager.SelectedCards.Count == 0)
-        {
-            cardsSelected = false;
-            bindable = true;
-        }
-        else if (DeckManager.SelectedCards.Count >= 4)
-        {
-            cardsSelected = true;
-            bindable = false;
-        }
-        else
-        {
-            cardsSelected = true;
-            bindable = true;
-        }
+        cardsSelected = (DeckManager.SelectedCards.Count > 0);
     }
 
     void ManaCostCheck()

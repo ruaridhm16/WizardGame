@@ -4,7 +4,7 @@ public class Lifegel : Card
 {
     public int healAmount = 5;
 
-    public override void OnActivation()
+    public override void OnCast()
     {
         Debug.Log($"Lifegel healed {healAmount} health!");
         // Your actual damage logic here

@@ -5,7 +5,7 @@ public class ThornSwarm : Card
 {
     public int damage = 3;
 
-    public override void OnActivation()
+    public override void OnCast()
     {
         Debug.Log($"ThornSwarm activated dealing {damage} damage!");
         // Your actual damage logic here
