@@ -59,6 +59,10 @@ public class UIManager : MonoBehaviour
     private Button bindButton;
     private Button summonButton;
 
+    // NEW BUTTONS
+    private Button passButton;
+    private Button discardButton;
+
     private Label castCostLabel;
     private Label bindCostLabel;
     private Label summonCostLabel;
@@ -124,6 +128,10 @@ public class UIManager : MonoBehaviour
         castButton = root.Q<Button>("CastButton");
         bindButton = root.Q<Button>("BindButton");
         summonButton = root.Q<Button>("SummonButton");
+
+        // NEW BUTTONS
+        passButton = root.Q<Button>("PassButton");
+        discardButton = root.Q<Button>("DiscardButton");
 
         castCostLabel = root.Q<Label>("CastCost");
         summonCostLabel = root.Q<Label>("SummonCost");
@@ -208,7 +216,7 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        bindable = (freeSlots >= selectedCount && selectedCount > 0);
+        bindable = (freeSlots >= selectedCount && selectedCount > 0 && selectedCount <= 3);
     }
 
     private void UpdateHealthUI(float maxHealth)
@@ -363,6 +371,9 @@ public class UIManager : MonoBehaviour
         if (castButton != null) { castButton.clicked -= OnCast; castButton.clicked += OnCast; }
         if (bindButton != null) { bindButton.clicked -= OnBind; bindButton.clicked += OnBind; }
         if (summonButton != null) { summonButton.clicked -= OnSummon; summonButton.clicked += OnSummon; }
+
+        if (passButton != null) { passButton.clicked -= OnPass; passButton.clicked += OnPass; }
+        if (discardButton != null) { discardButton.clicked -= OnDiscard; discardButton.clicked += OnDiscard; }
     }
 
     private void CaptureAndLogColors()
@@ -370,6 +381,8 @@ public class UIManager : MonoBehaviour
         CaptureOne(castButton, "Cast");
         CaptureOne(bindButton, "Bind");
         CaptureOne(summonButton, "Summon");
+        CaptureOne(passButton, "Pass");
+        CaptureOne(discardButton, "Discard");
     }
 
     private void CaptureOne(Button b, string label)
@@ -385,13 +398,15 @@ public class UIManager : MonoBehaviour
 
     private void UpdateButtonsNow()
     {
-        if (castButton == null || bindButton == null || summonButton == null) return;
+        if (castButton == null || bindButton == null || summonButton == null || passButton == null || discardButton == null) return;
 
         if (cardsDragging || !turnActive)
         {
             Show(castButton, false);
             Show(bindButton, false);
             Show(summonButton, false);
+            Show(passButton, false);
+            Show(discardButton, false);
             return;
         }
 
@@ -408,15 +423,20 @@ public class UIManager : MonoBehaviour
             Show(summonButton, true);
         }
 
+        Show(passButton, true);
+        Show(discardButton, true);
+
         if (bindExpensive) bindable = false;
 
         bool canCast = castable && !castExpensive;
         bool canBind = bindable && !bindExpensive;
         bool canSummon = summonable && !summonExpensive;
+        bool canDiscard = cardsSelected; // NEW discard logic
 
         SetDisabled(castButton, !canCast);
         SetDisabled(bindButton, !canBind);
         SetDisabled(summonButton, !canSummon);
+        SetDisabled(discardButton, !canDiscard);
     }
 
     private void UpdateCostsNow()
@@ -479,5 +499,16 @@ public class UIManager : MonoBehaviour
 
         GetComponent<CardActions>().SummonCards(space, cardsInDeck);
         turnActive = false;
+    }
+
+    private void OnPass()
+    {
+        turnActive = false;
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
+    }
+
+    private void OnDiscard()
+    {
+        Debug.Log("Discard pressed");
     }
 }
