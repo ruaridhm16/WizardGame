@@ -18,7 +18,7 @@ public class CardView : MonoBehaviour
 
     public void Flip()
     {
-        if (card.flipped)
+        if (card.isFlipped)
         {
             spriteRenderer.sprite = card.cardFace;
         }
@@ -27,6 +27,6 @@ public class CardView : MonoBehaviour
             spriteRenderer.sprite = card.cardBack;
         }
 
-        card.flipped = !card.flipped;
+        card.isFlipped = !card.isFlipped;
     }
 }

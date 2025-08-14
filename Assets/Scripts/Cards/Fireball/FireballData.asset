@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc6708a26e1f3a46b22671b18521a05, type: 3}
+  m_Name: FireballData
+  m_EditorClassIdentifier: 
+  cardName: Fireball
+  manaCost: 2
+  cardFace: {fileID: 2429319946959866025, guid: 2ed167a208e12cf4594867c3be2d7f00, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
+  decription: Burning ball of pure fire
+  baseDamage: 4

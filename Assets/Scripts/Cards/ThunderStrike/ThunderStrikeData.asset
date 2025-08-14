@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2089048efb8dbe141ba1346f8955cf5b, type: 3}
+  m_Name: ThunderStrikeData
+  m_EditorClassIdentifier: 
+  cardName: Thunder Strike
+  manaCost: 2
+  cardFace: {fileID: 4498156287151450404, guid: c47700179d1acc249a0ff8901cbb6413, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
+  decription: THUNDER
+  baseDamage: 8

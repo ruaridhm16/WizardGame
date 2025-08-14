@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587aa84828b0925459294ea84e56f255, type: 3}
+  m_Name: ThornSwarmData
+  m_EditorClassIdentifier: 
+  cardName: Thorn Swarm
+  manaCost: 2
+  cardFace: {fileID: -3175694221896100207, guid: 5254ff10814d441499ba59c14ac5f497, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
+  decription: Deadly thorns of poison
+  baseDamage: 3

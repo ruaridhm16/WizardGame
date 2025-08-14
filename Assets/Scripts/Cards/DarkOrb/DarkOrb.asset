@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249f2b8fb98151847a9798f4a3d76386, type: 3}
+  m_Name: DarkOrb
+  m_EditorClassIdentifier: 
+  cardName: Dark Orb
+  manaCost: 2
+  cardFace: {fileID: 8054933273683047914, guid: 2dceb57548adda64087adcbc4d9c7a02, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
+  decription: Glowing orb of pure darkness, will damage enemies and shroud their
+    spells in darknesss
+  baseDamage: 10

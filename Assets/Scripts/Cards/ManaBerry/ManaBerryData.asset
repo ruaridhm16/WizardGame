@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dab52d237251549971db1c56c3ebe8, type: 3}
+  m_Name: ManaBerryData
+  m_EditorClassIdentifier: 
+  cardName: Mana Berry
+  manaCost: 2
+  cardFace: {fileID: 418848743015960761, guid: e6e5d29efaaeb8644a9313ca451c0871, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
+  decription: Exotic magical fruit of the forbidden forrest, will slowly add mana
+    restoration if planted
+  baseManaRestore: 2

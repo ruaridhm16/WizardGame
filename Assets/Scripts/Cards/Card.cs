@@ -1,21 +1,19 @@
 using UnityEngine;
 
-public abstract class Card : ScriptableObject
+public abstract class Card : MonoBehaviour
 {
     public string cardName;
     public int manaCost;
     public Sprite cardFace;
     public Sprite cardBack;
-    public bool flipped = false;
+    public string decription;
+    [HideInInspector] public bool isFlipped;
+    [HideInInspector] public GameObject spawnedCard = null;
 
-    [HideInInspector] public GameObject SpawnedPhysicalCard;
+
     public abstract void OnCast();
-    public virtual void OnDraw() { }
-    public virtual void OnDiscard() { }
-
-    
-
-
-
+    public abstract void OnDestroyCard();
+    public abstract void OnDraw();
+    public abstract void OnDiscard();
 
 }

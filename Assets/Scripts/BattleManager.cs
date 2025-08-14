@@ -7,19 +7,19 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     public int numFireball;
-    public Fireball FireballSO;
+    public FireballData FireballSO;
     public int numLifegel;
-    public Lifegel LifegelSO;
+    public LifegelData LifegelSO;
     public int numManaberry;
-    public ManaBerry ManaBerrySO;
+    public ManaBerryData ManaBerrySO;
     public int numThunderStrike;
-    public ThunderStrike ThunderStrikeSO;
+    public ThunderStrikeData ThunderStrikeSO;
     public int numEnchantedMirror;
-    public EnchantedMirror EnchantedMirrorSO;
+    public EnchantedMirrorData EnchantedMirrorSO;
     public int numDarkOrb;
-    public DarkOrb DarkOrbSO;
+    public DarkOrbData DarkOrbSO;
     public int numThornSwarm;
-    public ThornSwarm ThrornSwarmSO;
+    public ThornSwarmData ThrornSwarmSO;
 
     [SerializeField] private CardActions CardActions;
     [SerializeField] private GameObject HandZone;
@@ -45,8 +45,6 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         DeckManager.HandZone = HandZone;
-
-        CardLibrary.Initialize();
 
         StartBattle();
     }
@@ -80,10 +78,10 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(CardActions.DrawInitialHand(PlayerValueManager.handDrawSize));
     }
 
-    public void AddNumCards(int num, Card card) {
+    public void AddNumCards(int num, CardData card) {
         for (int i = 0; i < num; i++)
         {
-            DeckManager.SetDeck.Add(card);
+            DeckManager.SetDeck.Add(card.CreateInstance());
         }
     }
 

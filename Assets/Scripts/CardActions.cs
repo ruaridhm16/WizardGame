@@ -34,7 +34,7 @@ public class CardActions : MonoBehaviour
 
         DeckManager.Hand.Add(card);
         DeckManager.HandCards.Add(physicalCard);
-        card.SpawnedPhysicalCard = physicalCard;
+        card.spawnedCard = physicalCard;
         DeckManager.Deck.Remove(card);
 
         SpriteRenderer sr = physicalCard.GetComponent<SpriteRenderer>();

@@ -26,12 +26,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 0.48
-    - _Intensity: 1.51
-    - _Octaves: 3.92
+    - _Intensity: 3
+    - _Octaves: 3.97
     - _Scale: 10
     - _Softness: 0.061
     - _Speed: 0.32
-    - _Threshold: 0.87
+    - _Threshold: 0.748
     m_Colors:
     - _Color: {r: 0.25943398, g: 0.14562568, b: 0.24994999, a: 1}
     - _Pixelate: {r: 256, g: 256, b: 0, a: 0}
