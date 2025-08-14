@@ -15,6 +15,6 @@ MonoBehaviour:
   cardName: Mana Berry
   manaCost: 2
   cardFace: {fileID: 8738707728633136614, guid: 058f2620d28e13e489aa17571aaf842f, type: 3}
-  cardBack: {fileID: 8738707728633136614, guid: 058f2620d28e13e489aa17571aaf842f, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
   manaGeneration: 5

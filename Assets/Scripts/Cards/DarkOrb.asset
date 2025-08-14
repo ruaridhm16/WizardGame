@@ -15,6 +15,6 @@ MonoBehaviour:
   cardName: Dark Orb
   manaCost: 2
   cardFace: {fileID: 8054933273683047914, guid: 2dceb57548adda64087adcbc4d9c7a02, type: 3}
-  cardBack: {fileID: 8054933273683047914, guid: 2dceb57548adda64087adcbc4d9c7a02, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
   damage: 5

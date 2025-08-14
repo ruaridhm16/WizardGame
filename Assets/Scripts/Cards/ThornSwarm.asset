@@ -15,6 +15,6 @@ MonoBehaviour:
   cardName: Thorn Swarm
   manaCost: 2
   cardFace: {fileID: -3175694221896100207, guid: 5254ff10814d441499ba59c14ac5f497, type: 3}
-  cardBack: {fileID: -3175694221896100207, guid: 5254ff10814d441499ba59c14ac5f497, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
   damage: 3

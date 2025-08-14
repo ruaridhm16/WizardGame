@@ -15,6 +15,6 @@ MonoBehaviour:
   cardName: Lifegel
   manaCost: 3
   cardFace: {fileID: 393152454190485466, guid: f16c9a2c5505a86439a3a81a8739bbf5, type: 3}
-  cardBack: {fileID: 393152454190485466, guid: f16c9a2c5505a86439a3a81a8739bbf5, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
   healAmount: 5

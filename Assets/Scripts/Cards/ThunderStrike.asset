@@ -15,6 +15,6 @@ MonoBehaviour:
   cardName: Thunder Strike
   manaCost: 2
   cardFace: {fileID: 4498156287151450404, guid: c47700179d1acc249a0ff8901cbb6413, type: 3}
-  cardBack: {fileID: 4498156287151450404, guid: c47700179d1acc249a0ff8901cbb6413, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   SpawnedPhysicalCard: {fileID: 0}
   damage: 8
