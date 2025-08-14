@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_MagicWaves 1
+  m_Name: MagicAmbience
   m_Shader: {fileID: 4800000, guid: 4ac0c77e00716e04fba859439772cb0c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,15 +25,15 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.26
-    - _Intensity: 1.1
-    - _Octaves: 2.52
+    - _Alpha: 0.23
+    - _Intensity: 1.56
+    - _Octaves: 3.97
     - _Scale: 10
-    - _Softness: 0.089
+    - _Softness: 0.061
     - _Speed: 0.32
-    - _Threshold: 0.75
+    - _Threshold: 0.748
     m_Colors:
-    - _Color: {r: 0.14509805, g: 0.1826968, b: 0.25882354, a: 1}
+    - _Color: {r: 0.25943398, g: 0.14562568, b: 0.24994999, a: 1}
     - _Pixelate: {r: 256, g: 256, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
