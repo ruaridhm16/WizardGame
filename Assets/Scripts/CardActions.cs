@@ -98,6 +98,7 @@ public class CardActions : MonoBehaviour
         for (int i = 0; i < numSelected; i++)
         {
             GameObject physicalCard = DeckManager.SelectedPhysicalCards[0];
+            
             Card card = physicalCard.GetComponent<CardView>().card;
 
             DeckManager.Hand.Remove(card);
@@ -107,6 +108,7 @@ public class CardActions : MonoBehaviour
             physicalCard.transform.parent = targetParent.transform;
             physicalCard.transform.localPosition = Vector3.zero;
             physicalCard.transform.localScale = Vector3.one;
+            physicalCard.GetComponent<CardView>().Flip();
             targetParent.GetComponent<BindSlot>().occupied = true;
             targetParent.GetComponent<BindSlot>().boundCard = card;
 

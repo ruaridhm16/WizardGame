@@ -10,6 +10,7 @@ public class BindSlot : MonoBehaviour
     void Start()
     {
         DeckManager.BoundSlots.Add(this.gameObject);
+        DeckManager.SortBoundSlots();
     }
 
 

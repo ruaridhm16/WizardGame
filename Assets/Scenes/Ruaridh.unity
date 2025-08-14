@@ -491,8 +491,9 @@ GameObject:
   m_Component:
   - component: {fileID: 594720084}
   - component: {fileID: 594720083}
+  - component: {fileID: 594720085}
   m_Layer: 0
-  m_Name: BindSlot7
+  m_Name: F-BindSlot7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,6 +569,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1566197000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &594720085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594720082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 903966315}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: -2.1983635, y: -2.018236, z: -0.5550151}
+  m_LocalPosition: {x: -2.1983635, y: -2.018236, z: -0.6699998}
   m_LocalScale: {x: 18.470268, y: 6.3295093, z: 1.009118}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -749,8 +765,9 @@ GameObject:
   m_Component:
   - component: {fileID: 936787890}
   - component: {fileID: 936787889}
+  - component: {fileID: 936787891}
   m_Layer: 0
-  m_Name: BindSlot6
+  m_Name: D-BindSlot6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,6 +843,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1566197000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &936787891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936787888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &1089157027
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,12 +989,13 @@ MonoBehaviour:
   EnchantedMirrorSO: {fileID: 11400000, guid: d430cb9ba03fc4e4aa1c97e297bda4ca, type: 2}
   numDarkOrb: 3
   DarkOrbSO: {fileID: 11400000, guid: fb9a3d6ddde32bc40bb89688485e9d9d, type: 2}
-  numThornSwarm: 0
-  ThrornSwarmSO: {fileID: 0}
+  numThornSwarm: 3
+  ThrornSwarmSO: {fileID: 11400000, guid: 444df05cf9c38734889bc47e273dc727, type: 2}
   CardActions: {fileID: 1117104887}
   HandZone: {fileID: 220450780}
-  playerTurn: 0
+  playerTurn: 1
   previousPlayerTurn: 0
+  phase: 0
 --- !u!4 &1117104884
 Transform:
   m_ObjectHideFlags: 0
@@ -1128,8 +1161,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1347637623}
   - component: {fileID: 1347637622}
+  - component: {fileID: 1347637624}
   m_Layer: 0
-  m_Name: BindSlot3
+  m_Name: C-BindSlot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1205,6 +1239,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1566197000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1347637624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347637621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &1451151285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,8 +1264,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1451151287}
   - component: {fileID: 1451151286}
+  - component: {fileID: 1451151288}
   m_Layer: 0
-  m_Name: BindSlot2
+  m_Name: E-BindSlot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1292,6 +1342,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1566197000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1451151288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451151285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &1482831031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,7 +1433,7 @@ Transform:
   m_GameObject: {fileID: 1566196999}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2102597, y: -0.9110999, z: 0.66307324}
+  m_LocalPosition: {x: 2.2102597, y: -0.9110999, z: 3.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1408,7 +1473,7 @@ Transform:
   m_GameObject: {fileID: 1592861049}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.1983635, y: 1.9992645, z: -0.5550153}
+  m_LocalPosition: {x: -2.1983635, y: 1.9992645, z: -0.67}
   m_LocalScale: {x: 18.470268, y: 6.3295093, z: 1.009118}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1479,8 +1544,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1784881224}
   - component: {fileID: 1784881223}
+  - component: {fileID: 1784881225}
   m_Layer: 0
-  m_Name: BindSlot8
+  m_Name: H-BindSlot8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1556,6 +1622,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1566197000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1784881225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784881222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &1833857390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,8 +1647,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1833857391}
   - component: {fileID: 1833857392}
+  - component: {fileID: 1833857393}
   m_Layer: 0
-  m_Name: BindSlot5
+  m_Name: B-BindSlot5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1643,6 +1725,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1833857393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833857390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &1869492837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,8 +1750,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1869492838}
   - component: {fileID: 1869492839}
+  - component: {fileID: 1869492840}
   m_Layer: 0
-  m_Name: BindSlot4
+  m_Name: A-BindSlot4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1730,6 +1828,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1869492840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869492837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupied: 0
+  disabled: 0
+  boundCard: {fileID: 0}
 --- !u!1 &1897435415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,7 +1855,7 @@ GameObject:
   - component: {fileID: 1897435416}
   - component: {fileID: 1897435418}
   m_Layer: 0
-  m_Name: BindSlot1
+  m_Name: G-BindSlot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1833,8 +1946,6 @@ MonoBehaviour:
   occupied: 0
   disabled: 0
   boundCard: {fileID: 0}
-  BattleManager: {fileID: 0}
-  lastFramePlayerTurn: 0
 --- !u!1 &1965945148
 GameObject:
   m_ObjectHideFlags: 0
