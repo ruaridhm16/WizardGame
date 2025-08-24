@@ -10,18 +10,16 @@ public class CardActions : MonoBehaviour
     private HandManager HandManager;
     public IEnumerator DrawInitialHand(int numCards)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         HandManager = DeckManager.HandZone.GetComponent<HandManager>();
         HandManager.ResizeBounds(numCards);
-
-        
 
         for (int i = 0; i < numCards; i++)
         {
             DrawCard(DeckManager.Deck[UnityEngine.Random.Range(0, DeckManager.Deck.Count - 1)]);
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -55,36 +53,104 @@ public class CardActions : MonoBehaviour
 
     }
 
-    public void CastSelectedCards()
+    public void DiscardSelectedCards()
     {
-        int total = 0;
         foreach (Card card in DeckManager.SelectedCards)
         {
-            total += card.manaCost;
-        }
+            GameObject physicalCard = card.spawnedCard;
 
-
-        foreach (GameObject physicalCard in DeckManager.SelectedPhysicalCards)
-        {
-            Card card = physicalCard.GetComponent<CardView>().card;
+            DeckManager.Discards.Add(card);
 
             DeckManager.Hand.Remove(card);
             DeckManager.HandCards.Remove(physicalCard);
+            card.spawnedCard = null;
             Destroy(physicalCard);
         }
         DeckManager.SelectedCards.Clear();
         DeckManager.SelectedPhysicalCards.Clear();
         DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
 
-        PlayerValueManager.Mana -= total;
+        // Play card casting animation 
+
+
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurnComplete = true;
+    }
+
+    public void CastSelectedCards()
+    {
+        int cost = CalculateCastBindManaCost();
+
+        foreach (Card card in DeckManager.SelectedCards)
+        {
+            GameObject physicalCard = card.spawnedCard;
+
+            card.OnCast();
+
+            DeckManager.Hand.Remove(card);
+            DeckManager.HandCards.Remove(physicalCard);
+            card.spawnedCard = null;
+            Destroy(physicalCard);
+        }
+        DeckManager.SelectedCards.Clear();
+        DeckManager.SelectedPhysicalCards.Clear();
+        DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
+
+        PlayerValueManager.Mana -= cost;
 
         // Play card casting animation 
 
 
-        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurnComplete = true;
     }
 
     public void BindSelectedCards()
+    {
+        int cost = CalculateCastBindManaCost();
+
+        int numSelected = DeckManager.SelectedCards.Count;
+
+        for (int i = 0; i < numSelected; i++)
+        {
+            Card card = DeckManager.SelectedCards[0];
+
+            GameObject physicalCard = card.spawnedCard;
+            GameObject targetParent = DeckManager.BoundSlots.Find(o => o.GetComponent<BindSlot>().occupied == false);
+
+            Bind(card, targetParent);
+            
+            DeckManager.SelectedPhysicalCards.Remove(physicalCard);
+            DeckManager.SelectedCards.Remove(card);
+        }
+        DeckManager.SelectedCards.Clear();
+        DeckManager.SelectedPhysicalCards.Clear();
+        DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
+
+        PlayerValueManager.Mana -= cost;
+
+        // Play card binding animation 
+
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurnComplete = true;
+    }
+
+    public void Bind(Card card, GameObject destination)
+    {
+        GameObject physicalCard = card.spawnedCard;
+
+        physicalCard.transform.parent = destination.transform;
+        physicalCard.transform.localPosition = Vector3.zero;
+        physicalCard.transform.localScale = Vector3.one;
+        physicalCard.GetComponent<CardView>().Flip();
+        destination.GetComponent<BindSlot>().occupied = true;
+        destination.GetComponent<BindSlot>().boundCard = card;
+
+        physicalCard.GetComponent<CardInteractions>().Deselect();
+        physicalCard.GetComponent<CardInteractions>().isInteractible = false;
+        
+        DeckManager.Hand.Remove(card);
+        DeckManager.HandCards.Remove(physicalCard);
+    }
+
+    public int CalculateCastBindManaCost()
     {
         int total = 0;
 
@@ -93,44 +159,10 @@ public class CardActions : MonoBehaviour
             total += card.manaCost;
         }
 
-        int numSelected = DeckManager.SelectedCards.Count;
-
-        for (int i = 0; i < numSelected; i++)
-        {
-            GameObject physicalCard = DeckManager.SelectedPhysicalCards[0];
-            
-            Card card = physicalCard.GetComponent<CardView>().card;
-
-            DeckManager.Hand.Remove(card);
-            DeckManager.HandCards.Remove(physicalCard);
-
-            GameObject targetParent = DeckManager.BoundSlots.Find(o => o.GetComponent<BindSlot>().occupied == false);
-            physicalCard.transform.parent = targetParent.transform;
-            physicalCard.transform.localPosition = Vector3.zero;
-            physicalCard.transform.localScale = Vector3.one;
-            physicalCard.GetComponent<CardView>().Flip();
-            targetParent.GetComponent<BindSlot>().occupied = true;
-            targetParent.GetComponent<BindSlot>().boundCard = card;
-
-            physicalCard.GetComponent<CardInteractions>().Deselect();
-            physicalCard.GetComponent<CardInteractions>().isInteractible=false;
-            DeckManager.SelectedPhysicalCards.Remove(physicalCard);
-            DeckManager.SelectedCards.Remove(card);
-
-
-        }
-        DeckManager.SelectedCards.Clear();
-        DeckManager.SelectedPhysicalCards.Clear();
-        DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
-
-        PlayerValueManager.Mana -= total;
-
-        // Play card binding animation 
-
-        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
+        return total;
     }
 
-    public void SummonCards( int space, int cardsInDeck)
+    public void SummonCards(int space, int cardsInDeck)
     {
         if (space > 1 && cardsInDeck >= 2)
         {
@@ -143,7 +175,7 @@ public class CardActions : MonoBehaviour
             PlayerValueManager.Mana -= 2;
         }
 
-        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurnComplete = true;
     }
 
 

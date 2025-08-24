@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -24,19 +25,18 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private CardActions CardActions;
     [SerializeField] private GameObject HandZone;
 
-    public bool playerTurn;
-    public bool previousPlayerTurn;
+    public bool playerTurnComplete = false;
 
     public enum BattlePhase
     {
         PlayerTurn,
         PlayerTurnAnimations,
         PlayerPostTurn,
-        
+
         OpponentTurn,
         OpponentTurnAnimations,
         OpponentPostTurn,
-        
+
         PostRound
     }
 
@@ -49,22 +49,11 @@ public class BattleManager : MonoBehaviour
         StartBattle();
     }
 
-    private void Update()
-    {
-        if (previousPlayerTurn == false && playerTurn == true) { NewTurn(); };
-        previousPlayerTurn = playerTurn;
-        
-    }
-
-    public void NewTurn()
-    {
-        GetComponent<UIManager>().turnActive = true;
-    }
-
 
     public void StartBattle()
     {
-        
+        EnterPlayerTurn();
+
         AddNumCards(numFireball, FireballSO);
         AddNumCards(numLifegel, LifegelSO);
         AddNumCards(numManaberry, ManaBerrySO);
@@ -76,9 +65,18 @@ public class BattleManager : MonoBehaviour
         DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 
         StartCoroutine(CardActions.DrawInitialHand(PlayerValueManager.handDrawSize));
+        
+        
     }
 
-    public void AddNumCards(int num, CardData card) {
+    public IEnumerator AwaitBoolean(Func<bool> condition, Action action)
+    {
+        yield return new WaitUntil(condition);
+        action?.Invoke();
+    }
+
+    public void AddNumCards(int num, CardData card)
+    {
         for (int i = 0; i < num; i++)
         {
             DeckManager.SetDeck.Add(card.CreateInstance());
@@ -87,61 +85,105 @@ public class BattleManager : MonoBehaviour
 
     public void nextPhase()
     {
+        if (phase == BattlePhase.PostRound) { UpdatePhase(BattlePhase.PlayerTurn); return; }
+        BattlePhase[] phases = new BattlePhase[] { BattlePhase.PlayerTurn, BattlePhase.PlayerTurnAnimations, BattlePhase.PlayerPostTurn, BattlePhase.OpponentTurn, BattlePhase.OpponentTurnAnimations, BattlePhase.OpponentPostTurn, BattlePhase.PostRound };
+        for (int i = 0; i < phases.Length; i++) {
+            if (phase == phases[i])
+            {
+                UpdatePhase(phases[i + 1]);
+                return;
+            }
+        }
+        
+    }
+
+    public void UpdatePhase(BattlePhase phase) {
         switch (phase)
         {
             case BattlePhase.PlayerTurn:
-                phase = BattlePhase.PlayerTurnAnimations;
+                EnterPlayerTurn();
                 break;
             case BattlePhase.PlayerTurnAnimations:
-                phase = BattlePhase.PlayerPostTurn;
+                EnterPlayerAnimation();
                 break;
             case BattlePhase.PlayerPostTurn:
-                phase = BattlePhase.OpponentTurn;
+                EnterPlayerPostTurn();
                 break;
             case BattlePhase.OpponentTurn:
-                phase = BattlePhase.OpponentTurnAnimations;
+                EnterOpponentTurn();
                 break;
             case BattlePhase.OpponentTurnAnimations:
-                phase = BattlePhase.OpponentPostTurn;
+                EnterOpponentAnimations();
                 break;
             case BattlePhase.OpponentPostTurn:
-                phase = BattlePhase.PostRound;
+                EnterOpponentPostTurn();
                 break;
             case BattlePhase.PostRound:
-                phase = BattlePhase.PlayerTurn;
+                EnterPostRound();
                 break;
-
         }
     }
 
-    public IEnumerator ActiveBattle()
+    public void EnterPlayerTurn()
     {
-        switch (phase) {
-            case BattlePhase.PlayerTurn:
-                //wait for player move
-                break;
-            case BattlePhase.PlayerTurnAnimations:
-                //wait for player move
-                break;
-            case BattlePhase.PlayerPostTurn:
-                //wait for player move
-                break;
-            case BattlePhase.OpponentTurn:
-                //wait for player move
-                break;
-            case BattlePhase.OpponentTurnAnimations:
-                //wait for player move
-                break;
-            case BattlePhase.OpponentPostTurn:
-                //wait for player move
-                break;
-            case BattlePhase.PostRound:
-                //post round
-                break;
+        print("Entered Player turn");
+        phase = BattlePhase.PlayerTurn;
+        StartCoroutine(AwaitBoolean(() => playerTurnComplete, () => nextPhase()));
+    }
 
-        }
+    public void EnterPlayerAnimation()
+    {
+        playerTurnComplete = false;
+        print("Entered Player Animations");
+        phase = BattlePhase.PlayerTurnAnimations;
 
-        yield return new WaitForEndOfFrame();
+        //Animate
+
+        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+    }
+    public void EnterPlayerPostTurn()
+    {
+        print("Entered Player Post turn");
+        phase = BattlePhase.PlayerPostTurn;
+
+        //Some Passives will active here
+
+        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+    }
+
+    public void EnterOpponentTurn()
+    {
+        print("Entered Opponent turn");
+        phase = BattlePhase.OpponentTurn;
+
+        //Opponent move
+
+        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+    }
+
+    public void EnterOpponentAnimations()
+    {
+        print("Entered Opponent Animations");
+        phase = BattlePhase.OpponentTurnAnimations;
+
+        //Animate
+
+        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+    }
+    public void EnterOpponentPostTurn()
+    {
+        print("Entered Opponent post turn");
+        phase = BattlePhase.OpponentPostTurn;
+
+        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+    }
+    public void EnterPostRound()
+    {
+        print("Entered Post Round");
+        phase = BattlePhase.PostRound;
+
+        PlayerValueManager.Mana += 2;
+        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
     }
 
     

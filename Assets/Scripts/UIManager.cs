@@ -7,10 +7,10 @@ using System.Collections.Generic;
 public class UIManager : MonoBehaviour
 {
     public EnemyManager EnemyManager;
+    [HideInInspector] public BattleManager BattleManager;
 
     public bool cardsSelected;
     public bool cardsDragging;
-    public bool turnActive;
     public bool bindable = true;
 
     public int castCost;
@@ -79,6 +79,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         root = uiDocument.rootVisualElement;
+        BattleManager = GetComponent<BattleManager>();
     }
 
     private void OnEnable()
@@ -400,7 +401,7 @@ public class UIManager : MonoBehaviour
     {
         if (castButton == null || bindButton == null || summonButton == null || passButton == null || discardButton == null) return;
 
-        if (cardsDragging || !turnActive)
+        if (cardsDragging || BattleManager.phase != BattleManager.BattlePhase.PlayerTurn)
         {
             Show(castButton, false);
             Show(bindButton, false);
@@ -483,13 +484,11 @@ public class UIManager : MonoBehaviour
     private void OnCast()
     {
         GetComponent<CardActions>().CastSelectedCards();
-        turnActive = false;
     }
 
     private void OnBind()
     {
         GetComponent<CardActions>().BindSelectedCards();
-        turnActive = false;
     }
 
     private void OnSummon()
@@ -498,13 +497,11 @@ public class UIManager : MonoBehaviour
         int cardsInDeck = DeckManager.Deck.Count;
 
         GetComponent<CardActions>().SummonCards(space, cardsInDeck);
-        turnActive = false;
     }
 
     private void OnPass()
     {
-        turnActive = false;
-        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurn = false;
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurnComplete = true;
     }
 
     private void OnDiscard()

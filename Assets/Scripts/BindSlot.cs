@@ -18,7 +18,7 @@ public class BindSlot : MonoBehaviour
     {
         if (occupied)
         {
-            Debug.Log(this.name + " activated " + boundCard.name);
+            Debug.Log(this.name + " activated " + boundCard.cardName);
         }
     }
 }

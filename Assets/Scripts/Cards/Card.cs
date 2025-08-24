@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Card : MonoBehaviour
+public abstract class Card
 {
     public string cardName;
     public int manaCost;
