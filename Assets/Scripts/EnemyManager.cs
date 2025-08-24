@@ -6,6 +6,18 @@ public class EnemyManager : MonoBehaviour
     public int MaxHealth = 100;
     public int health = 100;
     public int mana = 10;
+
+    public GameObject enemyHandZone;
+
+
+    [SerializeField] public List<Card> enemyDeck = new List<Card>();
+    [HideInInspector] public List<Card> enemyHand = new List<Card>();
+    [HideInInspector] public List<GameObject> enemyHandCards = new List<GameObject>();
+    [HideInInspector] public List<Card> enemySelectedCards = new List<Card>();
+    [HideInInspector] public List<Card> enemySelectedPhysicalCards = new List<Card>();
+    [HideInInspector] public List<Card> enemyDiscards = new List<Card>();
+
+
     public void DealDamage(int damage)
     {
         health -= damage;
@@ -18,6 +30,21 @@ public class EnemyManager : MonoBehaviour
 
     public void HealEnemy(int healAmount)
     {
-        
+
+    }
+
+    public void DrawEnemyCards()
+    {
+
+    }
+
+    public void MakeEnemyDecision()
+    {
+
+    }
+
+    public void SelectEnemyCards()
+    {
+
     }
 }

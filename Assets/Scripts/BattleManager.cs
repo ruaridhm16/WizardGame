@@ -22,8 +22,12 @@ public class BattleManager : MonoBehaviour
     public int numThornSwarm;
     public ThornSwarmData ThrornSwarmSO;
 
-    [SerializeField] private CardActions CardActions;
-    [SerializeField] private GameObject HandZone;
+    [SerializeField] private PlayerCardActions PlayerCardActions;
+    [SerializeField] private EnemyCardActions EnemyCardActions;
+    [SerializeField] private GameObject PlayerHandZone;
+    [SerializeField] private GameObject EnemyHandZone;
+
+    [SerializeField] private EnemyManager enemyManager;
 
     public bool playerTurnComplete = false;
 
@@ -44,7 +48,7 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
-        DeckManager.HandZone = HandZone;
+        DeckManager.HandZone = PlayerHandZone;
 
         StartBattle();
     }
@@ -62,9 +66,15 @@ public class BattleManager : MonoBehaviour
         AddNumCards(numEnchantedMirror, EnchantedMirrorSO);
         AddNumCards(numThornSwarm, ThrornSwarmSO);
 
+        AddEnemyNumCards(15, FireballSO);
+        AddEnemyNumCards(5, LifegelSO);
+
         DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 
-        StartCoroutine(CardActions.DrawInitialHand(PlayerValueManager.handDrawSize));
+        StartCoroutine(PlayerCardActions.DrawInitialHand());
+        EnemyCardActions.enemyManager = enemyManager;
+        StartCoroutine(EnemyCardActions.DrawInitialHand());
+        
         
         
     }
@@ -82,19 +92,28 @@ public class BattleManager : MonoBehaviour
             DeckManager.SetDeck.Add(card.CreateInstance());
         }
     }
+    
+    public void AddEnemyNumCards(int num, CardData card)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            enemyManager.enemyDeck.Add(card.CreateInstance());
+        }
+    }
 
     public void nextPhase()
     {
         if (phase == BattlePhase.PostRound) { UpdatePhase(BattlePhase.PlayerTurn); return; }
         BattlePhase[] phases = new BattlePhase[] { BattlePhase.PlayerTurn, BattlePhase.PlayerTurnAnimations, BattlePhase.PlayerPostTurn, BattlePhase.OpponentTurn, BattlePhase.OpponentTurnAnimations, BattlePhase.OpponentPostTurn, BattlePhase.PostRound };
-        for (int i = 0; i < phases.Length; i++) {
+        for (int i = 0; i < phases.Length; i++)
+        {
             if (phase == phases[i])
             {
                 UpdatePhase(phases[i + 1]);
                 return;
             }
         }
-        
+
     }
 
     public void UpdatePhase(BattlePhase phase) {
@@ -181,8 +200,7 @@ public class BattleManager : MonoBehaviour
     {
         print("Entered Post Round");
         phase = BattlePhase.PostRound;
-
-        PlayerValueManager.Mana += 2;
+        StartCoroutine(GetComponent<UIManager>().ManaRegenAnimation());
         StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
     }
 

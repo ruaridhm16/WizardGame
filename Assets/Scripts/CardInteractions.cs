@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CardInteractions : MonoBehaviour
 {
+    public bool isEnemyCard = false;
+
     public bool isDragging = false;
     private bool isSelected = false;
     private Vector2 destination;
@@ -17,26 +19,31 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (isEnemyCard) { return; }
         if (!isInteractible) { return; }
 
         mouseDownPosition = GetMouseWorldPosition();
     }
 
     private void FixedUpdate() {
-        if (isDragging) {
+        if (isEnemyCard) { return; }
+        if (isDragging)
+        {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             sr.sortingOrder = DeckManager.Hand.Count;
 
 
             int cardIndex = DeckManager.HandCards.IndexOf(this.gameObject);
-            if (cardIndex != DeckManager.HandCards.Count - 1 && transform.position.x >= DeckManager.HandCards[cardIndex + 1].transform.position.x) {
-                
+            if (cardIndex != DeckManager.HandCards.Count - 1 && transform.position.x >= DeckManager.HandCards[cardIndex + 1].transform.position.x)
+            {
+
                 GameObject temp = this.gameObject;
                 DeckManager.HandCards[cardIndex] = DeckManager.HandCards[cardIndex + 1];
                 DeckManager.HandCards[cardIndex + 1] = temp;
                 DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
             }
-            else if (cardIndex != 0 && transform.position.x < DeckManager.HandCards[cardIndex - 1].transform.position.x) {
+            else if (cardIndex != 0 && transform.position.x < DeckManager.HandCards[cardIndex - 1].transform.position.x)
+            {
                 GameObject temp = this.gameObject;
                 DeckManager.HandCards[cardIndex] = DeckManager.HandCards[cardIndex - 1];
                 DeckManager.HandCards[cardIndex - 1] = temp;
@@ -47,6 +54,7 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseDrag()
     {
+        if (isEnemyCard) { return; }
         if (!isInteractible) { return; }
 
         Vector3 currentMouse = GetMouseWorldPosition();
@@ -82,6 +90,7 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (isEnemyCard) { return; }
         if (!isInteractible) { return; }
 
         if (isDragging)
@@ -120,12 +129,15 @@ public class CardInteractions : MonoBehaviour
 
     void HandleClick()
     {
-        if (isSelected) {
+        if (isEnemyCard) { return; }
+        if (isSelected)
+        {
             transform.position -= new Vector3(0, 0.2f, 0);
             DeckManager.SelectedCards.Remove(GetComponent<CardView>().card);
             DeckManager.SelectedPhysicalCards.Remove(gameObject);
         }
-        else {
+        else
+        {
             transform.position += new Vector3(0, 0.2f, 0);
             DeckManager.SelectedCards.Add(GetComponent<CardView>().card);
             DeckManager.SelectedPhysicalCards.Add(gameObject);
