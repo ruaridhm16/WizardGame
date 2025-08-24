@@ -45,3 +45,11 @@
     transition-duration: 0.1s;
     transition-timing-function: ease-in-bounce;
 }
+
+.animatedManaRegen {
+    translate: -72px 0;
+    scale: 1.1 1.1;
+    rotate: -15deg;
+    transition-duration: 0.1s;
+    transition-timing-function: ease;
+}

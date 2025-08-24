@@ -9,6 +9,8 @@ public static class PlayerValueManager
 
     private static float mana = 10;
 
+    private static float manaRegen = 2;
+
     public static float Health
     {
         get => health;
@@ -31,4 +33,14 @@ public static class PlayerValueManager
             mana = Mathf.Max(0, value); // No upper bound unless you define one
         }
     }
+
+    public static float ManaRegen
+    {
+        get => manaRegen;
+        set
+        {
+            manaRegen = Mathf.Max(0, value);
+        }
+    }
 }
+

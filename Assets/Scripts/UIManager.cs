@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using static BattleManager;
 
 public class UIManager : MonoBehaviour
 {
@@ -28,15 +29,18 @@ public class UIManager : MonoBehaviour
     private VisualElement playerHealthBar;
     private VisualElement playerHealthBG;
     private Label manaText;
+    private Label manaRegenText;
 
     private VisualElement opponentHealthBar;
     private VisualElement opponentHealthBG;
     private Label opponentHealthText;
 
     private Button settingsButton;
+    private Button settingsBackButton;
     private Button quitButton;
 
     private VisualElement gameOverPanel;
+    private VisualElement settingsScreen;
     private Button retryButton;
 
     [SerializeField] private UIDocument uiDocument;
@@ -48,18 +52,20 @@ public class UIManager : MonoBehaviour
     private float displayedHealth;
     private float displayedHealthBarWidth;
     private float displayedMana;
+    private float displayedManaRegen;
 
     private float previousEnemyHealth;
     private float displayedEnemyHealth;
     private float displayedEnemyHealthBarWidth;
 
     private bool gameOverShown = false;
+    private bool settingsShown = false;
 
     private Button castButton;
     private Button bindButton;
     private Button summonButton;
 
-    // NEW BUTTONS
+
     private Button passButton;
     private Button discardButton;
 
@@ -88,6 +94,7 @@ public class UIManager : MonoBehaviour
         playerHealthBar = root.Q<VisualElement>("PlayerHealthBar");
         playerHealthBG = root.Q<VisualElement>("PlayerHealthBG");
         manaText = root.Q<Label>("ManaText");
+        manaRegenText = root.Q<Label>("ManaRegenText");
 
         opponentHealthBar = root.Q<VisualElement>("OpponentHealthBar");
         opponentHealthBG = root.Q<VisualElement>("OpponentHealthBG");
@@ -96,10 +103,14 @@ public class UIManager : MonoBehaviour
         settingsButton = root.Q<Button>("Settings");
         if (settingsButton != null) settingsButton.clicked += OnSettingsButtonClicked;
 
+        settingsBackButton = root.Q<Button>("SettingsBack");
+        if (settingsBackButton != null) settingsBackButton.clicked += OnSettingsBackButtonClicked;
+
         quitButton = root.Q<Button>("QuitGame");
         if (quitButton != null) quitButton.clicked += OnQuitButtonClicked;
 
         gameOverPanel = root.Q<VisualElement>("DeathPanel");
+        settingsScreen = root.Q<VisualElement>("SettingsScreen");
         retryButton = root.Q<Button>("Retry");
         if (gameOverPanel != null)
         {
@@ -117,6 +128,7 @@ public class UIManager : MonoBehaviour
         displayedHealthBarWidth = PlayerValueManager.MaxHealth > 0
             ? PlayerValueManager.Health / PlayerValueManager.MaxHealth : 0f;
         displayedMana = PlayerValueManager.Mana;
+        displayedManaRegen = PlayerValueManager.ManaRegen;
         previousHealth = PlayerValueManager.Health;
 
         displayedEnemyHealth = EnemyManager.health;
@@ -130,7 +142,6 @@ public class UIManager : MonoBehaviour
         bindButton = root.Q<Button>("BindButton");
         summonButton = root.Q<Button>("SummonButton");
 
-        // NEW BUTTONS
         passButton = root.Q<Button>("PassButton");
         discardButton = root.Q<Button>("DiscardButton");
 
@@ -187,6 +198,7 @@ public class UIManager : MonoBehaviour
         UpdateHealthUI(maxHealth);
         UpdateEnemyHealthUI(maxEnemyHealth);
         UpdateManaUI();
+        UpdateManaRegenUI();
 
         if (!gameOverShown && currentHealth <= 0f) ShowGameOver();
 
@@ -240,6 +252,20 @@ public class UIManager : MonoBehaviour
     {
         if (manaText != null)
             manaText.text = $"{Mathf.RoundToInt(displayedMana)}";
+    }
+
+    private void UpdateManaRegenUI()
+    {
+        if (manaRegenText != null)
+            manaRegenText.text = $"+{Mathf.RoundToInt(displayedManaRegen)}";
+    }
+
+    public IEnumerator ManaRegenAnimation()
+    {
+        manaRegenText.AddToClassList("animatedManaRegen");
+        yield return new WaitForSeconds(0.1f);
+        manaRegenText.RemoveFromClassList("animatedManaRegen");
+        PlayerValueManager.Mana += PlayerValueManager.ManaRegen;
     }
 
     public void TriggerEffect(VisualElement target)
@@ -357,7 +383,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OnSettingsButtonClicked() { Debug.Log("Settings pressed"); }
+    private void OnSettingsButtonClicked() 
+    {
+        settingsShown = true;
+        settingsScreen.style.display = DisplayStyle.Flex;
+        Debug.Log("Settings pressed"); 
+    }
+
+    private void OnSettingsBackButtonClicked()
+    {
+        settingsShown = false;
+        settingsScreen.style.display = DisplayStyle.None;
+        Debug.Log("Back pressed");
+    }
+
     private void OnQuitButtonClicked() { Debug.Log("Quit pressed"); }
     private void OnRetryClicked()
     {
