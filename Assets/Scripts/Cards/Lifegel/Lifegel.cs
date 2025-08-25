@@ -6,7 +6,7 @@ public class Lifegel : Card
 
     public override void OnCast()
     {
-        Debug.Log($"{cardName} deals {healAmount} damage!");
+        PlayerValueManager.Health += healAmount;
     }
 
     public override void OnDestroyCard()

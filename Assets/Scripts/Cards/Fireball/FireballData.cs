@@ -6,10 +6,11 @@ public class FireballData : CardData
 
     public int baseDamage = 10;
 
-    public override Card CreateInstance()
+    public override Card CreateInstance(BattleManager BattleManager)
     {
         Fireball card = new Fireball
         {
+            battleManager = BattleManager,
             cardName = this.cardName,
             manaCost = this.manaCost,
             cardFace = this.cardFace,

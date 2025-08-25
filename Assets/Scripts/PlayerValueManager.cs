@@ -20,7 +20,7 @@ public static class PlayerValueManager
             if (health <= 0)
             {
                 Debug.Log("Player Died");
-                
+
             }
         }
     }
@@ -41,6 +41,16 @@ public static class PlayerValueManager
         {
             manaRegen = Mathf.Max(0, value);
         }
+    }
+
+    public static void healPlayer(int healAmount)
+    {
+        health += healAmount;
+    }
+
+    public static void gainMana(int manaAmmount)
+    {
+        mana += manaAmmount;
     }
 }
 

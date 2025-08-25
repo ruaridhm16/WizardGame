@@ -27,7 +27,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject PlayerHandZone;
     [SerializeField] private GameObject EnemyHandZone;
 
-    [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] public EnemyManager enemyManager;
 
     public bool playerTurnComplete = false;
 
@@ -89,7 +89,7 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            DeckManager.SetDeck.Add(card.CreateInstance());
+            DeckManager.SetDeck.Add(card.CreateInstance(this.GetComponent<BattleManager>()));
         }
     }
     
@@ -97,7 +97,7 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            enemyManager.enemyDeck.Add(card.CreateInstance());
+            enemyManager.enemyDeck.Add(card.CreateInstance(this.GetComponent<BattleManager>()));
         }
     }
 

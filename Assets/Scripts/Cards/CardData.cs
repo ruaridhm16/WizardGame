@@ -8,7 +8,7 @@ public abstract class CardData : ScriptableObject
     public Sprite cardBack;
     public string decription;
 
-    public abstract Card CreateInstance();
+    public abstract Card CreateInstance(BattleManager BattleManager);
 
     
 

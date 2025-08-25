@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     public int mana = 10;
 
     public GameObject enemyHandZone;
-
+    public List<GameObject> BoundSlots = new List<GameObject>();
 
     [SerializeField] public List<Card> enemyDeck = new List<Card>();
     [HideInInspector] public List<Card> enemyHand = new List<Card>();
@@ -46,5 +46,17 @@ public class EnemyManager : MonoBehaviour
     public void SelectEnemyCards()
     {
 
+    }
+
+    public void SortBoundSlots()
+    {
+        BoundSlots.Sort((a, b) =>
+        {
+            if (a == null && b == null) return 0;
+            if (a == null) return 1;
+            if (b == null) return -1;
+
+            return string.Compare(a.name, b.name, System.StringComparison.Ordinal);
+        });
     }
 }

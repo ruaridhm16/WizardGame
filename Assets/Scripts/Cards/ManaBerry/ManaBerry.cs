@@ -3,10 +3,11 @@ using UnityEngine;
 public class ManaBerry : Card
 {
     public int manaRestore;
+    public int instantManaGain;
 
     public override void OnCast()
     {
-        Debug.Log($"{cardName} restores {manaRestore} mana!");
+        PlayerValueManager.gainMana(instantManaGain);
     }
 
     public override void OnDestroyCard()

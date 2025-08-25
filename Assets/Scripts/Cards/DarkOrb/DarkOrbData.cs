@@ -5,10 +5,11 @@ public class DarkOrbData : CardData
 {
     public int baseDamage = 10;
 
-    public override Card CreateInstance()
+    public override Card CreateInstance(BattleManager BattleManager)
     {
         DarkOrb card = new DarkOrb
         {
+            battleManager = BattleManager,
             cardName = this.cardName,
             manaCost = this.manaCost,
             cardFace = this.cardFace,

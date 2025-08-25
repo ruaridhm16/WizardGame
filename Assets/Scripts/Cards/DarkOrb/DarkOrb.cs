@@ -6,7 +6,7 @@ public class DarkOrb : Card
 
     public override void OnCast()
     {
-        Debug.Log($"{cardName} deals {damage} damage!");
+        battleManager.enemyManager.DealDamage(damage);
     }
 
     public override void OnDestroyCard()

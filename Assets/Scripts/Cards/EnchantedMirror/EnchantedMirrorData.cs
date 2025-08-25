@@ -5,10 +5,11 @@ public class EnchantedMirrorData : CardData
 {
     public int damageReflectionPeercentge = 5;
 
-    public override Card CreateInstance()
+    public override Card CreateInstance(BattleManager BattleManager)
     {
         EnchantedMirror card = new EnchantedMirror
         {
+            battleManager = BattleManager,
             cardName = this.cardName,
             manaCost = this.manaCost,
             cardFace = this.cardFace,

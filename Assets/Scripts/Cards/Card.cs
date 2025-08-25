@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class Card
 {
+    public BattleManager battleManager;
     public string cardName;
     public int manaCost;
     public Sprite cardFace;
