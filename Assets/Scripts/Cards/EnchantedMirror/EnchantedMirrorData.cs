@@ -18,6 +18,7 @@ public class EnchantedMirrorData : CardData
             damageReflectionPeercentge = this.damageReflectionPeercentge,
             isPlayerCard = true,
             cardHealth = baseCardHealth,
+            CardAttributes = BaseCardAttributes,
         };
         return card;
     }

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class Card
@@ -9,22 +13,69 @@ public abstract class Card
     public Sprite cardBack;
     public string decription;
     public int cardHealth;
+
+    public enum CardAttribute
+    {
+        Damage,
+        Support,
+        Healing,
+        Aimable,
+        Debuff,
+        Buff,
+        ManaGeneration,
+        Binding,
+        Casting,
+        Trap,
+    }
+
+    public List<CardAttribute> CardAttributes;
+
     [HideInInspector] public bool isFlipped;
     [HideInInspector] public GameObject spawnedCard = null;
+    [HideInInspector] public GameObject attatchedBindSlot = null;
     [HideInInspector] public bool isBound = false;
     [HideInInspector] public bool isPlayerCard;
 
 
-    public abstract void OnCast(BattleManager.CastTargets target);
-    public abstract void OnDestroyCard();
-    public abstract void OnDraw();
-    public abstract void OnDiscard();
-    public abstract void OnEnemyDestroyCard();
-    public abstract void OnEnemyDamageCard();
-    public abstract void OnBindPassive();
-    public abstract void OnBind(bool player);
+    public virtual void OnCast(BattleManager.CastTargets target)
+    {
+        return;
+    }
+    public virtual void OnDestroyCard()
+    {
+        if (attatchedBindSlot != null)
+        {
+            attatchedBindSlot.GetComponent<BindSlot>().boundCard = null;
+            attatchedBindSlot.GetComponent<BindSlot>().occupied = false;
+        }
+        GameObject.Destroy(spawnedCard);
+    }
+    public virtual void OnDraw()
+    {
+        return;
+    }
+    public virtual void OnDiscard()
+    {
+        return;
+    }
+    public virtual void OnEnemyDestroyCard()
+    {
+        return;
+    }
+    public virtual void OnEnemyDamageCard()
+    {
+        return;
+    }
+    public virtual void OnBindPassive()
+    {
+        return;
+    }
+    public virtual void OnBind(bool player)
+    {
+        return;
+    }
 
-    public void DamageCard(int damage)
+    public virtual void DamageCard(int damage)
     {
         cardHealth -= damage;
         if (cardHealth <= 0)
@@ -32,6 +83,4 @@ public abstract class Card
             OnDestroyCard();
         }
     }
-
-
 }

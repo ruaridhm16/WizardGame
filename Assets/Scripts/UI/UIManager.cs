@@ -534,7 +534,21 @@ public class UIManager : MonoBehaviour
 
     private void OnCast()
     {
-        showAttackButton = true;
+        bool aimRequired = false;
+        foreach (Card card in DeckManager.SelectedCards)
+        {
+            if (card.CardAttributes.Contains(Card.CardAttribute.Aimable))
+            {
+                aimRequired = true;
+            }
+        }
+
+        if (aimRequired)
+        {
+            showAttackButton = true;
+        }
+        else { GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.Opponent); }
+        
     }
 
     private void OnAttack()

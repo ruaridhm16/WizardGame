@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.XR;
 public class EnemyManager : MonoBehaviour
 {
     public int MaxHealth = 50;
@@ -27,7 +29,7 @@ public class EnemyManager : MonoBehaviour
     {
         battleManager = GetComponent<BattleManager>();
         enemyCardActions = GetComponent<EnemyCardActions>();
-    } 
+    }
 
     public void DealDamage(int damage)
     {
@@ -36,34 +38,59 @@ public class EnemyManager : MonoBehaviour
 
     public void EnemyAction()
     {
-        /// Possible actions are:
-        /// Pass (2 mana or less)
-        /// Summon (<= 1 card 100%, 2 cards 50%, 3 cards 25%, 4 cards 10%)
-        /// Bind (20% chance to bind)
-        /// Cast else
-        /// 
-
-        if (mana <= 2)
+        if (doSkip())
         {
             SkipTurn();
-            print("ENEMY SKIPS");
+            print("Enemy Skips with " + mana + " mana");
         }
-        else if (enemyHand.Count <= 1 || (enemyHand.Count == 2 && PercentageChance(50)) || (enemyHand.Count == 3 && PercentageChance(25)) || (enemyHand.Count == 4 && PercentageChance(10)))
+        else if (doSummon())
         {
             SummonCards();
-            print("ENEMY SUMMONS");
+            print("Enemy Summons");
         }
-        else if (!BindSlotsAllFilled() && PercentageChance(25))
+        else if (doBind())
         {
             BindCards();
-            print("ENEMY BINDS");
+            print("Enemy Binds");
         }
         else
         {
             CastCards();
-            print("ENEMY CASTS");
+            print("Enemy Casts");
         }
 
+    }
+    public bool doSkip()
+    {
+        if (mana <= 0) { return true; }
+        if (mana == 1 && PercentageChance(75)) { return true; }
+        if (mana == 2 && PercentageChance(50)) { return true; }
+        if ((mana <= 4) && PercentageChance(20)) { return true; }
+        if ((mana <= 6) && PercentageChance(5)) { return true; }
+        return false;
+    }
+
+    public bool doSummon()
+    {
+        if (enemyHand.Count == 0) { return true; }
+        if (enemyHand.Count <= 2 && PercentageChance(75)) {return true;}
+        if (enemyHand.Count <= 4 && PercentageChance(50)) {return true;}
+        if (PercentageChance(25)) { return true;}
+        return false;
+    }
+
+    public bool doBind()
+    {
+        int chance = 20;
+        foreach (Card card in enemyHand)
+        {
+            if (card.CardAttributes.Contains(Card.CardAttribute.Binding))
+            {
+                chance += 10;
+            }
+        }
+
+        return PercentageChance(chance);
     }
 
     public bool BindSlotsAllFilled()
@@ -79,7 +106,7 @@ public class EnemyManager : MonoBehaviour
 
     public bool PercentageChance(int Percent)
     {
-        return (Random.Range(0, 100) <= Percent);
+        return (UnityEngine.Random.Range(0, 100) <= Percent);
     }
 
     public void HealEnemy(int healAmount)
@@ -110,44 +137,54 @@ public class EnemyManager : MonoBehaviour
 
     public void BindCards()
     {
-        bool allSelected = false;
         int currentTotalManaCost = 0;
         int bindSpaces = GetNumBindSpaces();
-        while (!allSelected)
+        int baseChance = 50;
+
+        for (int i = 0; i < enemyHand.Count; i++)
         {
-            Card addedCard = enemyHand[Random.Range(0, enemyHand.Count - 1)];
-            if (addedCard.manaCost <= mana)
+            int chance = baseChance;
+            if (enemyHand[i].CardAttributes.Contains(Card.CardAttribute.Binding)) { chance += 50; }
+            chance -= 10 * i;
+            if (mana - currentTotalManaCost > 0 && bindSpaces > 0 && PercentageChance(chance))
             {
-                enemySelectedCards.Add(addedCard);
-                enemySelectedPhysicalCards.Add(addedCard.spawnedCard);
-                currentTotalManaCost += addedCard.manaCost;
-                if ((mana - currentTotalManaCost <= 2 || PercentageChance(50)) || (enemySelectedCards.Count + 1 >= bindSpaces))
-                {
-                    allSelected = true;
-                }
+                enemySelectedCards.Add(enemyHand[i]);
+                enemySelectedPhysicalCards.Add(enemyHand[i].spawnedCard);
+                currentTotalManaCost += enemyHand[i].manaCost;
             }
         }
+
+        if (enemySelectedCards.Count == 0) {
+            int a = UnityEngine.Random.Range(0, enemyHand.Count - 1);
+            enemySelectedCards.Add(enemyHand[a]);
+            enemySelectedPhysicalCards.Add(enemyHand[a].spawnedCard);
+        }
+
         enemyCardActions.BindSelectedCards();
         battleManager.enemyTurnComplete = true;
     }
 
     public void CastCards()
     {
-        bool allSelected = false;
         int currentTotalManaCost = 0;
-        while (!allSelected)
+
+        for (int i = 0; i < enemyHand.Count; i++)
         {
-            Card addedCard = enemyHand[Random.Range(0, enemyHand.Count - 1)];
-            if (addedCard.manaCost <= mana)
+            if (mana - currentTotalManaCost > 0 && enemyHand[i].CardAttributes.Contains(Card.CardAttribute.Casting) && PercentageChance(50))
             {
-                enemySelectedCards.Add(addedCard);
-                enemySelectedPhysicalCards.Add(addedCard.spawnedCard);
-                currentTotalManaCost += addedCard.manaCost;
-                if (mana - currentTotalManaCost <= 2 || PercentageChance(50)) {
-                    allSelected = true;
-                }
+                enemySelectedCards.Add(enemyHand[i]);
+                enemySelectedPhysicalCards.Add(enemyHand[i].spawnedCard);
+                currentTotalManaCost += enemyHand[i].manaCost;
             }
         }
+
+        if (enemySelectedCards.Count == 0)
+        {
+            int a = UnityEngine.Random.Range(0, enemyHand.Count - 1);
+            enemySelectedCards.Add(enemyHand[a]);
+            enemySelectedPhysicalCards.Add(enemyHand[a].spawnedCard);
+        }
+
         enemyCardActions.CastSelectedCards(BattleManager.CastTargets.Player);
         battleManager.enemyTurnComplete = true;
     }

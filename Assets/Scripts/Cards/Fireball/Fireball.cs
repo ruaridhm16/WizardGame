@@ -4,16 +4,6 @@ public class Fireball : Card
 {
     public int damage;
 
-    public override void OnBind(bool player)
-    {
-        return;
-    }
-
-    public override void OnBindPassive()
-    {
-        return;
-    }
-
     public override void OnCast(BattleManager.CastTargets target)
     {
         switch (target)
@@ -25,36 +15,11 @@ public class Fireball : Card
                 battleManager.enemyManager.DealDamage(damage);
                 break;
             case BattleManager.CastTargets.PlayerBoundCard:
+                battleManager.TargetedCard.DamageCard(damage);
                 break;
             case BattleManager.CastTargets.OpponentBoundCard:
+                battleManager.TargetedCard.DamageCard(damage);
                 break;
         }
-    }
-
-    public override void OnDestroyCard()
-    {
-        return;
-
-        
-    }
-
-    public override void OnDiscard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnDraw()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnEnemyDamageCard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnEnemyDestroyCard()
-    {
-        throw new System.NotImplementedException();
     }
 }

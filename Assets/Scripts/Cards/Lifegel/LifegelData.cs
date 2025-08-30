@@ -18,6 +18,7 @@ public class LifegelData : CardData
             healAmount = this.baseHealAmount,
             isPlayerCard = true,
             cardHealth = baseCardHealth,
+            CardAttributes = BaseCardAttributes,
         };
         return card;
     }

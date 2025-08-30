@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CardInteractions : MonoBehaviour
@@ -13,7 +14,8 @@ public class CardInteractions : MonoBehaviour
     private Vector3 dragOffset;
     private Vector3 mouseDownPosition;
 
-    public bool isInteractible = true;
+    public bool isDraggable = true;
+    public bool isClickable = true;
 
 
 
@@ -21,14 +23,10 @@ public class CardInteractions : MonoBehaviour
     public float dragThreshold = 0.15f;
     void OnMouseDown()
     {
-        if (!card.isPlayerCard) { return; }
-        if (!isInteractible) { return; }
-
         mouseDownPosition = GetMouseWorldPosition();
     }
 
     private void FixedUpdate() {
-        if (!card.isPlayerCard) { return; }
         if (isDragging)
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -56,8 +54,7 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseDrag()
     {
-        if (!card.isPlayerCard) { return; }
-        if (!isInteractible) { return; }
+        if (!isDraggable) { return; }
 
         Vector3 currentMouse = GetMouseWorldPosition();
         float distance = Vector3.Distance(mouseDownPosition, currentMouse);
@@ -92,9 +89,6 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (!card.isPlayerCard) { return; }
-        if (!isInteractible) { return; }
-
         if (isDragging)
         {
             DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
@@ -115,10 +109,17 @@ public class CardInteractions : MonoBehaviour
                 DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
             }
         }
-        else
+        else if (isClickable)
         {
-            // Mouse didn't move much — treat as a click
-            HandleClick();
+            if (card.isPlayerCard)
+            {
+                HandClick();
+            }
+            else
+            {
+                EnemyBoundCardClick();
+            }
+            
         }
     }
     
@@ -129,16 +130,8 @@ public class CardInteractions : MonoBehaviour
         DeckManager.SelectedPhysicalCards.Remove(gameObject);
     }
 
-    void HandleClick()
+    void HandClick()
     {
-        if (!card.isPlayerCard)
-        {
-            if (isPlayerTargetSelect && card.isBound)
-            {
-
-            }
-            else { return; }
-        }
         if (isSelected)
         {
             transform.position -= new Vector3(0, 0.2f, 0);
@@ -153,8 +146,15 @@ public class CardInteractions : MonoBehaviour
         }
         isSelected = !isSelected;
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = isSelected;
+    }
 
+    void EnemyBoundCardClick()
+    {
         
+        BattleManager battleManager = card.battleManager;
+        battleManager.TargetedCard = this.card;
+        battleManager.GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.OpponentBoundCard);
+        battleManager.TargetedCard = null;
 
     }
 

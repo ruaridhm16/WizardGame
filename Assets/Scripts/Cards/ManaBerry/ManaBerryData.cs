@@ -20,6 +20,7 @@ public class ManaBerryData : CardData
             instantManaGain = this.baseInstantManaGain,
             isPlayerCard = true,
             cardHealth = baseCardHealth,
+            CardAttributes = BaseCardAttributes,
         };
         return card;
     }

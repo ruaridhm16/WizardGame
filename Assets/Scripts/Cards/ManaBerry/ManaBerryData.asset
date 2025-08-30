@@ -18,4 +18,8 @@ MonoBehaviour:
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   decription: Exotic magical fruit of the forbidden forrest, will slowly add mana
     restoration if planted
-  baseManaRestore: 2
+  baseCardHealth: 10
+  isPlayerCard: 0
+  BaseCardAttributes: 010000000600000007000000
+  baseManaRestore: 1
+  baseInstantManaGain: 5

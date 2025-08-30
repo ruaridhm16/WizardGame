@@ -17,4 +17,7 @@ MonoBehaviour:
   cardFace: {fileID: -3175694221896100207, guid: 5254ff10814d441499ba59c14ac5f497, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   decription: Deadly thorns of poison
+  baseCardHealth: 10
+  isPlayerCard: 0
+  BaseCardAttributes: 00000000030000000400000008000000
   baseDamage: 3

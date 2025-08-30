@@ -20,4 +20,5 @@ MonoBehaviour:
     spells in darknesss
   baseCardHealth: 10
   isPlayerCard: 0
+  BaseCardAttributes: 000000000300000008000000
   baseDamage: 5

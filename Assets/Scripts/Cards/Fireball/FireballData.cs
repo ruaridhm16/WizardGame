@@ -19,6 +19,7 @@ public class FireballData : CardData
             damage = this.baseDamage,
             isPlayerCard = true,
             cardHealth = baseCardHealth,
+            CardAttributes = BaseCardAttributes,
         };
         return card;
     }

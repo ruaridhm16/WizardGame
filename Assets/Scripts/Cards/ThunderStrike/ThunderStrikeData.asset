@@ -17,4 +17,7 @@ MonoBehaviour:
   cardFace: {fileID: 4498156287151450404, guid: c47700179d1acc249a0ff8901cbb6413, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   decription: THUNDER
+  baseCardHealth: 10
+  isPlayerCard: 0
+  BaseCardAttributes: 000000000300000008000000
   baseDamage: 8

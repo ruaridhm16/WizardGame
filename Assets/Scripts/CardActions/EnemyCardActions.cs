@@ -39,6 +39,10 @@ public class EnemyCardActions : CardActions
         sr.sprite = card.cardBack;
         sr.enabled = true;
         physicalCard.transform.localScale = Vector2.one;
+
+        physicalCard.GetComponent<CardInteractions>().isClickable = false;
+        physicalCard.GetComponent<CardInteractions>().isDraggable = false;
+
         card.isFlipped = true;
         card.isPlayerCard = false;
         handManager.UpdateHandView();
@@ -136,7 +140,7 @@ public class EnemyCardActions : CardActions
         destination.GetComponent<EnemyBindSlot>().boundCard = card;
 
         physicalCard.GetComponent<CardInteractions>().Deselect();
-        physicalCard.GetComponent<CardInteractions>().isInteractible = false;
+        physicalCard.GetComponent<CardInteractions>().isClickable = true;
 
         enemyManager.enemyHand.Remove(card);
         enemyManager.enemyHandCards.Remove(physicalCard);

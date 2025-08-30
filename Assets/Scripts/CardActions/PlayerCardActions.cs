@@ -138,7 +138,8 @@ public class PlayerCardActions : CardActions
         destination.GetComponent<BindSlot>().boundCard = card;
 
         physicalCard.GetComponent<CardInteractions>().Deselect();
-        physicalCard.GetComponent<CardInteractions>().isInteractible = false;
+        physicalCard.GetComponent<CardInteractions>().isClickable = false;
+        physicalCard.GetComponent<CardInteractions>().isDraggable = false;
 
         DeckManager.Hand.Remove(card);
         DeckManager.HandCards.Remove(physicalCard);

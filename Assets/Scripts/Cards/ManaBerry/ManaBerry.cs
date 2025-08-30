@@ -18,11 +18,6 @@ public class ManaBerry : Card
         }
     }
 
-    public override void OnBindPassive()
-    {
-        
-    }
-
     public override void OnCast(BattleManager.CastTargets target)
     {
         //Target = Player ->  gives the player mana
@@ -39,30 +34,5 @@ public class ManaBerry : Card
             case BattleManager.CastTargets.OpponentBoundCard:
                 break;
         }
-    }
-
-    public override void OnDestroyCard()
-    {
-        return;
-    }
-
-    public override void OnDiscard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnDraw()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnEnemyDamageCard()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnEnemyDestroyCard()
-    {
-        throw new System.NotImplementedException();
     }
 }

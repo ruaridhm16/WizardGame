@@ -36,8 +36,7 @@ public class BattleManager : MonoBehaviour
     public bool enemyTurnComplete = false;
 
     //LETTING THE CARD SCRIPTS KNOW WHAT CARD IS THE TARGET
-    public Card playerTargetedCard = null;
-    public Card EnemyTargetedCard = null;
+    public Card TargetedCard = null;
 
     public enum BattlePhase
     {
@@ -172,16 +171,14 @@ public class BattleManager : MonoBehaviour
 
     public void EnterPlayerTurn()
     {
-        print("Entered Player turn");
         phase = BattlePhase.PlayerTurn;
-        StartCoroutine(AwaitBoolean(() => playerTurnComplete, () => StartCoroutine(PhaseTimeout(1))));
+        StartCoroutine(AwaitBoolean(() => playerTurnComplete, () => StartCoroutine(PhaseTimeout(0))));
     }
 
     public void EnterPlayerAnimation()
     {
         GetComponent<UIManager>().showAttackButton = false;
         playerTurnComplete = false;
-        print("Entered Player Animations");
         phase = BattlePhase.PlayerTurnAnimations;
 
         //Animate
@@ -190,7 +187,6 @@ public class BattleManager : MonoBehaviour
     }
     public void EnterPlayerPostTurn()
     {
-        print("Entered Player Post turn");
         phase = BattlePhase.PlayerPostTurn;
 
         //Some Passives will active here
@@ -200,7 +196,6 @@ public class BattleManager : MonoBehaviour
 
     public void EnterOpponentTurn()
     {
-        print("Entered Opponent turn");
         phase = BattlePhase.OpponentTurn;
 
         enemyManager.EnemyAction();
@@ -210,7 +205,6 @@ public class BattleManager : MonoBehaviour
 
     public void EnterOpponentAnimations()
     {
-        print("Entered Opponent Animations");
         phase = BattlePhase.OpponentTurnAnimations;
 
         //Animate
@@ -219,14 +213,12 @@ public class BattleManager : MonoBehaviour
     }
     public void EnterOpponentPostTurn()
     {
-        print("Entered Opponent post turn");
         phase = BattlePhase.OpponentPostTurn;
 
         StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
     public void EnterPostRound()
     {
-        print("Entered Post Round");
         phase = BattlePhase.PostRound;
         foreach (GameObject slot in DeckManager.BoundSlots)
         {
