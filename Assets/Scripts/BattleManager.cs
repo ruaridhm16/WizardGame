@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    //STARTING PLAYER DECK
     public int numFireball;
     public FireballData FireballSO;
     public int numLifegel;
@@ -22,14 +23,21 @@ public class BattleManager : MonoBehaviour
     public int numThornSwarm;
     public ThornSwarmData ThrornSwarmSO;
 
+
+
+    //COMMON REFERENCES
     [SerializeField] private PlayerCardActions PlayerCardActions;
     [SerializeField] private EnemyCardActions EnemyCardActions;
     [SerializeField] private GameObject PlayerHandZone;
     [SerializeField] private GameObject EnemyHandZone;
-
     [SerializeField] public EnemyManager enemyManager;
 
     public bool playerTurnComplete = false;
+    public bool enemyTurnComplete = false;
+
+    //LETTING THE CARD SCRIPTS KNOW WHAT CARD IS THE TARGET
+    public Card playerTargetedCard = null;
+    public Card EnemyTargetedCard = null;
 
     public enum BattlePhase
     {
@@ -45,6 +53,19 @@ public class BattleManager : MonoBehaviour
     }
 
     public BattlePhase phase = BattlePhase.PlayerTurn;
+
+    public enum CastTargets
+    {
+        Player,
+        Opponent,
+        PlayerBoundCard,
+        OpponentBoundCard,
+        None
+    }
+
+    public CastTargets playerCastTarget = CastTargets.None;
+    public CastTargets enemyCastTarget = CastTargets.None;
+    
 
     void Start()
     {
@@ -91,6 +112,12 @@ public class BattleManager : MonoBehaviour
         {
             DeckManager.SetDeck.Add(card.CreateInstance(this.GetComponent<BattleManager>()));
         }
+    }
+
+    public IEnumerator PhaseTimeout(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        nextPhase();
     }
     
     public void AddEnemyNumCards(int num, CardData card)
@@ -147,18 +174,19 @@ public class BattleManager : MonoBehaviour
     {
         print("Entered Player turn");
         phase = BattlePhase.PlayerTurn;
-        StartCoroutine(AwaitBoolean(() => playerTurnComplete, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => playerTurnComplete, () => StartCoroutine(PhaseTimeout(1))));
     }
 
     public void EnterPlayerAnimation()
     {
+        GetComponent<UIManager>().showAttackButton = false;
         playerTurnComplete = false;
         print("Entered Player Animations");
         phase = BattlePhase.PlayerTurnAnimations;
 
         //Animate
 
-        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
     public void EnterPlayerPostTurn()
     {
@@ -167,7 +195,7 @@ public class BattleManager : MonoBehaviour
 
         //Some Passives will active here
 
-        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
 
     public void EnterOpponentTurn()
@@ -175,9 +203,9 @@ public class BattleManager : MonoBehaviour
         print("Entered Opponent turn");
         phase = BattlePhase.OpponentTurn;
 
-        //Opponent move
+        enemyManager.EnemyAction();
 
-        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => enemyTurnComplete, () => StartCoroutine(PhaseTimeout(1))));
     }
 
     public void EnterOpponentAnimations()
@@ -187,21 +215,30 @@ public class BattleManager : MonoBehaviour
 
         //Animate
 
-        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
     public void EnterOpponentPostTurn()
     {
         print("Entered Opponent post turn");
         phase = BattlePhase.OpponentPostTurn;
 
-        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
     public void EnterPostRound()
     {
         print("Entered Post Round");
         phase = BattlePhase.PostRound;
+        foreach (GameObject slot in DeckManager.BoundSlots)
+        {
+            Card boundCard = slot.GetComponent<BindSlot>().boundCard;
+            if (boundCard != null)
+            {
+                boundCard.OnBindPassive();
+            }
+        }
+        enemyManager.mana += enemyManager.manaRegen;
         StartCoroutine(GetComponent<UIManager>().ManaRegenAnimation());
-        StartCoroutine(AwaitBoolean(() => true, () => nextPhase()));
+        StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
 
     

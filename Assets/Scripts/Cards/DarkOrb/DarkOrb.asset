@@ -18,4 +18,6 @@ MonoBehaviour:
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
   decription: Glowing orb of pure darkness, will damage enemies and shroud their
     spells in darknesss
-  baseDamage: 10
+  baseCardHealth: 10
+  isPlayerCard: 0
+  baseDamage: 5

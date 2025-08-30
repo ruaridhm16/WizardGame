@@ -7,6 +7,8 @@ public abstract class CardData : ScriptableObject
     public Sprite cardFace;
     public Sprite cardBack;
     public string decription;
+    public int baseCardHealth = 10;
+    [HideInInspector] public bool isPlayerCard;
 
     public abstract Card CreateInstance(BattleManager BattleManager);
 

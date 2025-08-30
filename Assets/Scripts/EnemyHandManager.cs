@@ -15,11 +15,8 @@ public class EnemyHandManager : HandManager
 
             enemyManager.enemyHandCards[i].transform.position = new Vector2(handZoneCollider.bounds.min.x + (handZoneCollider.bounds.size.x / enemyManager.enemyHand.Count) * (i + 0.5f), handZoneCollider.bounds.center.y);
 
-            SpriteRenderer sr = DeckManager.HandCards[i].GetComponent<SpriteRenderer>();
+            SpriteRenderer sr = enemyManager.enemyHandCards[i].GetComponent<SpriteRenderer>();
             sr.sortingOrder = i;
-
-
-
         }
     }
     

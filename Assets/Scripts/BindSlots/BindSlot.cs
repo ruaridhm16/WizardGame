@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BindSlot : MonoBehaviour
 {
+    public BattleManager battleManager;
     [HideInInspector] public bool occupied = false;
     [HideInInspector] public bool disabled = false;
-    [HideInInspector] public Card boundCard;
+    [HideInInspector] public Card boundCard = null;
     void Start()
     {
         DeckManager.BoundSlots.Add(this.gameObject);
@@ -14,11 +15,11 @@ public class BindSlot : MonoBehaviour
     }
 
 
-    private void OnTurnEnd()
+    public void ActivateCardPassive()
     {
         if (occupied)
         {
-            Debug.Log(this.name + " activated " + boundCard.cardName);
+            boundCard.OnBindPassive();
         }
     }
 }

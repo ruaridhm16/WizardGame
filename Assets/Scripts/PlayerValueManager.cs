@@ -2,8 +2,8 @@ using UnityEngine;
 
 public static class PlayerValueManager
 {
-    private static float health = 100;
-    public static float MaxHealth = 100;
+    private static float health = 30;
+    public static float MaxHealth = 30;
 
     public static int handDrawSize = 7;
 
@@ -51,6 +51,11 @@ public static class PlayerValueManager
     public static void gainMana(int manaAmmount)
     {
         mana += manaAmmount;
+    }
+
+    public static void DamagePlayer(int damageAmount)
+    {
+        health -= damageAmount;
     }
 }
 

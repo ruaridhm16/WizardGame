@@ -17,7 +17,9 @@ public class ManaBerryData : CardData
             cardBack = this.cardBack,
             isFlipped = false,
             manaRestore = this.baseManaRestore,
-            instantManaGain = this.baseInstantManaGain
+            instantManaGain = this.baseInstantManaGain,
+            isPlayerCard = true,
+            cardHealth = baseCardHealth,
         };
         return card;
     }

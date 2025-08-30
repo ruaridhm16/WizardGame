@@ -4,6 +4,7 @@ using UnityEngine;
 public class DarkOrbData : CardData
 {
     public int baseDamage = 10;
+    
 
     public override Card CreateInstance(BattleManager BattleManager)
     {
@@ -15,7 +16,9 @@ public class DarkOrbData : CardData
             cardFace = this.cardFace,
             cardBack = this.cardBack,
             isFlipped = false,
-            damage = this.baseDamage
+            damage = this.baseDamage,
+            isPlayerCard = true,
+            cardHealth = baseCardHealth,
         };
         return card;
     }

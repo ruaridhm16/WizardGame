@@ -15,7 +15,9 @@ public class LifegelData : CardData
             cardFace = this.cardFace,
             cardBack = this.cardBack,
             isFlipped = false,
-            healAmount = this.baseHealAmount
+            healAmount = this.baseHealAmount,
+            isPlayerCard = true,
+            cardHealth = baseCardHealth,
         };
         return card;
     }

@@ -13,6 +13,7 @@ public class CardView : MonoBehaviour
     public void SetCard(Card card)
     {
         this.card = card;
+        GetComponent<CardInteractions>().card = card;
         spriteRenderer.sprite = card.cardFace;
     }
 

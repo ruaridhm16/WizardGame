@@ -16,7 +16,9 @@ public class FireballData : CardData
             cardFace = this.cardFace,
             cardBack = this.cardBack,
             isFlipped = false,
-            damage = this.baseDamage
+            damage = this.baseDamage,
+            isPlayerCard = true,
+            cardHealth = baseCardHealth,
         };
         return card;
     }

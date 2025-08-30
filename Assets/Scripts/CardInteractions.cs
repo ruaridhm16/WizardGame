@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CardInteractions : MonoBehaviour
 {
-    public bool isEnemyCard = false;
+    public Card card;
+    public bool isPlayerTargetSelect = false;
 
     public bool isDragging = false;
     private bool isSelected = false;
@@ -14,19 +15,20 @@ public class CardInteractions : MonoBehaviour
 
     public bool isInteractible = true;
 
+
+
     [Header("Config")]
     public float dragThreshold = 0.15f;
-
     void OnMouseDown()
     {
-        if (isEnemyCard) { return; }
+        if (!card.isPlayerCard) { return; }
         if (!isInteractible) { return; }
 
         mouseDownPosition = GetMouseWorldPosition();
     }
 
     private void FixedUpdate() {
-        if (isEnemyCard) { return; }
+        if (!card.isPlayerCard) { return; }
         if (isDragging)
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -54,7 +56,7 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseDrag()
     {
-        if (isEnemyCard) { return; }
+        if (!card.isPlayerCard) { return; }
         if (!isInteractible) { return; }
 
         Vector3 currentMouse = GetMouseWorldPosition();
@@ -90,7 +92,7 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (isEnemyCard) { return; }
+        if (!card.isPlayerCard) { return; }
         if (!isInteractible) { return; }
 
         if (isDragging)
@@ -129,7 +131,14 @@ public class CardInteractions : MonoBehaviour
 
     void HandleClick()
     {
-        if (isEnemyCard) { return; }
+        if (!card.isPlayerCard)
+        {
+            if (isPlayerTargetSelect && card.isBound)
+            {
+
+            }
+            else { return; }
+        }
         if (isSelected)
         {
             transform.position -= new Vector3(0, 0.2f, 0);

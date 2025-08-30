@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
     private bool castable = true;
     private bool summonable = true;
 
+    public bool showAttackButton = false;
+
     private Label playerHealthText;
     private VisualElement playerHealthBar;
     private VisualElement playerHealthBG;
@@ -64,6 +66,7 @@ public class UIManager : MonoBehaviour
     private Button castButton;
     private Button bindButton;
     private Button summonButton;
+    private Button attackButton;
 
 
     private Button passButton;
@@ -141,6 +144,7 @@ public class UIManager : MonoBehaviour
         castButton = root.Q<Button>("CastButton");
         bindButton = root.Q<Button>("BindButton");
         summonButton = root.Q<Button>("SummonButton");
+        attackButton = root.Q<Button>("AttackButton");
 
         passButton = root.Q<Button>("PassButton");
         discardButton = root.Q<Button>("DiscardButton");
@@ -170,6 +174,7 @@ public class UIManager : MonoBehaviour
         float currentHealth = PlayerValueManager.Health;
         float maxHealth = PlayerValueManager.MaxHealth;
         float currentMana = PlayerValueManager.Mana;
+        float currentManaRegen = PlayerValueManager.ManaRegen;
 
         float currentEnemyHealth = EnemyManager.health;
         float maxEnemyHealth = EnemyManager.MaxHealth;
@@ -188,6 +193,7 @@ public class UIManager : MonoBehaviour
 
         displayedHealth = Mathf.Lerp(displayedHealth, currentHealth, Time.deltaTime * 10f);
         displayedMana = Mathf.Lerp(displayedMana, currentMana, Time.deltaTime * 10f);
+        displayedManaRegen = Mathf.Lerp(displayedManaRegen, currentManaRegen, Time.deltaTime * 10f);
         float targetWidth = Mathf.Clamp01(maxHealth > 0 ? currentHealth / maxHealth : 0f);
         displayedHealthBarWidth = Mathf.Lerp(displayedHealthBarWidth, targetWidth, Time.deltaTime * 10f);
 
@@ -257,7 +263,10 @@ public class UIManager : MonoBehaviour
     private void UpdateManaRegenUI()
     {
         if (manaRegenText != null)
+        {
+
             manaRegenText.text = $"+{Mathf.RoundToInt(displayedManaRegen)}";
+        }
     }
 
     public IEnumerator ManaRegenAnimation()
@@ -411,6 +420,7 @@ public class UIManager : MonoBehaviour
         if (castButton != null) { castButton.clicked -= OnCast; castButton.clicked += OnCast; }
         if (bindButton != null) { bindButton.clicked -= OnBind; bindButton.clicked += OnBind; }
         if (summonButton != null) { summonButton.clicked -= OnSummon; summonButton.clicked += OnSummon; }
+        if (attackButton != null) { attackButton.clicked -= OnAttack; attackButton.clicked += OnAttack; }
 
         if (passButton != null) { passButton.clicked -= OnPass; passButton.clicked += OnPass; }
         if (discardButton != null) { discardButton.clicked -= OnDiscard; discardButton.clicked += OnDiscard; }
@@ -438,6 +448,8 @@ public class UIManager : MonoBehaviour
 
     private void UpdateButtonsNow()
     {
+        Show(attackButton, showAttackButton);
+
         if (castButton == null || bindButton == null || summonButton == null || passButton == null || discardButton == null) return;
 
         if (cardsDragging || BattleManager.phase != BattleManager.BattlePhase.PlayerTurn)
@@ -522,12 +534,18 @@ public class UIManager : MonoBehaviour
 
     private void OnCast()
     {
-        GetComponent<CardActions>().CastSelectedCards();
+        showAttackButton = true;
+    }
+
+    private void OnAttack()
+    {
+        GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.Opponent);
+        showAttackButton = false;
     }
 
     private void OnBind()
     {
-        GetComponent<CardActions>().BindSelectedCards();
+        GetComponent<PlayerCardActions>().BindSelectedCards();
     }
 
     private void OnSummon()
@@ -535,7 +553,7 @@ public class UIManager : MonoBehaviour
         int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
         int cardsInDeck = DeckManager.Deck.Count;
 
-        GetComponent<CardActions>().SummonCards(space, cardsInDeck);
+        GetComponent<PlayerCardActions>().SummonCards(space, cardsInDeck);
     }
 
     private void OnPass()
