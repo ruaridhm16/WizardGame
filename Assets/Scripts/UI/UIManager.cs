@@ -577,6 +577,6 @@ public class UIManager : MonoBehaviour
 
     private void OnDiscard()
     {
-        Debug.Log("Discard pressed");
+        GetComponent<PlayerCardActions>().DiscardSelectedCards();
     }
 }

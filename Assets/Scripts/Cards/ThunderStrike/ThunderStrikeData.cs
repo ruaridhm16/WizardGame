@@ -19,6 +19,9 @@ public class ThunderStrikeData : CardData
             isPlayerCard = true,
             cardHealth = baseCardHealth,
             CardAttributes = BaseCardAttributes,
+            cardDescription = this.cardDescription,
+            castDescription = this.castDescription,
+            bindDescription = this.bindDescription,
         };
         return card;
     }

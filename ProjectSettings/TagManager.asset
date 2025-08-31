@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Tooltip
+    uniqueID: 1946388873
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

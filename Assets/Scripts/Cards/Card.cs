@@ -11,7 +11,7 @@ public abstract class Card
     public int manaCost;
     public Sprite cardFace;
     public Sprite cardBack;
-    public string cardDecription;
+    public string cardDescription;
     public string castDescription;
     public string bindDescription;
     public int cardHealth;

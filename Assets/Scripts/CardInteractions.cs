@@ -17,26 +17,27 @@ public class CardInteractions : MonoBehaviour
     public bool isDraggable = true;
     public bool isClickable = true;
 
-
-
     [Header("Config")]
     public float dragThreshold = 0.15f;
+
     void OnMouseDown()
     {
-        mouseDownPosition = GetMouseWorldPosition();
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouseDownPosition = GetMouseWorldPosition();
+        }
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         if (isDragging)
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             sr.sortingOrder = DeckManager.Hand.Count;
 
-
             int cardIndex = DeckManager.HandCards.IndexOf(this.gameObject);
             if (cardIndex != DeckManager.HandCards.Count - 1 && transform.position.x >= DeckManager.HandCards[cardIndex + 1].transform.position.x)
             {
-
                 GameObject temp = this.gameObject;
                 DeckManager.HandCards[cardIndex] = DeckManager.HandCards[cardIndex + 1];
                 DeckManager.HandCards[cardIndex + 1] = temp;
@@ -54,6 +55,8 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseDrag()
     {
+        // Only allow dragging via left button
+        if (!Input.GetMouseButton(0)) { return; }
         if (!isDraggable) { return; }
 
         Vector3 currentMouse = GetMouseWorldPosition();
@@ -62,15 +65,17 @@ public class CardInteractions : MonoBehaviour
         if (!isDragging && distance > dragThreshold)
         {
             // Begin dragging
-
             transform.localScale = new Vector3(transform.localScale.x * 1.2f, transform.localScale.y * 1.2f, transform.localScale.z);
 
-            foreach (GameObject card in DeckManager.HandCards) {
-                if (card != this.gameObject && card.GetComponent<CardInteractions>().isSelected) {
-                card.GetComponent<CardInteractions>().Deselect();
-                card.transform.position -= new Vector3(0, 0.2f, 0);
+            foreach (GameObject card in DeckManager.HandCards)
+            {
+                if (card != this.gameObject && card.GetComponent<CardInteractions>().isSelected)
+                {
+                    card.GetComponent<CardInteractions>().Deselect();
+                    card.transform.position -= new Vector3(0, 0.2f, 0);
                 }
-                else {
+                else
+                {
                     Deselect();
                 }
             }
@@ -89,11 +94,13 @@ public class CardInteractions : MonoBehaviour
 
     void OnMouseUp()
     {
+        // Only process left button releases for click/drag logic
+        if (!Input.GetMouseButtonUp(0)) { return; }
+
         if (isDragging)
         {
             DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
             transform.localScale = new Vector3(transform.localScale.x / 1.2f, transform.localScale.y / 1.2f, transform.localScale.z);
-
 
             // Finish drag
             isDragging = false;
@@ -119,11 +126,19 @@ public class CardInteractions : MonoBehaviour
             {
                 EnemyBoundCardClick();
             }
-            
         }
     }
-    
-    public void Deselect() {
+
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            OnRightClick();
+        }
+    }
+
+    public void Deselect()
+    {
         isSelected = false;
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = isSelected;
         DeckManager.SelectedCards.Remove(GetComponent<CardView>().card);
@@ -150,12 +165,10 @@ public class CardInteractions : MonoBehaviour
 
     void EnemyBoundCardClick()
     {
-        
         BattleManager battleManager = card.battleManager;
         battleManager.TargetedCard = this.card;
         battleManager.GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.OpponentBoundCard);
         battleManager.TargetedCard = null;
-
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -163,5 +176,19 @@ public class CardInteractions : MonoBehaviour
         Vector3 screenPos = Input.mousePosition;
         screenPos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         return Camera.main.ScreenToWorldPoint(screenPos);
+    }
+    void OnRightClick()
+    {
+        TooltipManager tooltipManager = FindFirstObjectByType<BattleManager>().GetComponent<TooltipManager>();
+
+        if (tooltipManager.lastClicked == this.gameObject && tooltipManager.tooltipEnabled)
+        {
+            tooltipManager.DespawnTooltip();
+            return;
+        }
+
+        tooltipManager.SpawnTooltip(transform.position, card);
+
+        Debug.Log($"Right-click on card: {card.cardName}");
     }
 }
