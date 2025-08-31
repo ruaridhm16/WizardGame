@@ -35,4 +35,18 @@ public class ManaBerry : Card
                 break;
         }
     }
+
+    public override void OnDestroyCard()
+    {
+        base.OnDestroyCard();
+
+        if (isPlayerCard)
+        {
+            PlayerValueManager.ManaRegen -= manaRestore;
+        }
+        else
+        {
+            battleManager.enemyManager.manaRegen -= manaRestore;
+        }
+    }
 }
