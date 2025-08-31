@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_Sprite: {fileID: -7445573972071171987, guid: 11e62ac77de7997419bbc1800df6f164, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -190,7 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f890d2ec360ab84eb5b8c1fa72a852b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
 --- !u!61 &-4904689843900763360
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -249,5 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce962a81106bba479bf7eab78df5611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerTargetSelect: 0
   isDragging: 0
+  isDraggable: 1
+  isClickable: 1
+  isTooltipable: 1
   dragThreshold: 0.1

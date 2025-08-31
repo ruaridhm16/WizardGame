@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -48,8 +49,10 @@ public class TooltipManager : MonoBehaviour
     {
         lastClicked = card.spawnedCard;
         tooltipEnabled = true;
+
         // Display tooltipPanel
         tooltipPanel.style.display = DisplayStyle.Flex;
+        tooltipPanel.pickingMode = PickingMode.Position;
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
         Vector2 panelPos = RuntimePanelUtils.ScreenToPanel(root.panel, screenPos);
@@ -70,8 +73,10 @@ public class TooltipManager : MonoBehaviour
     public void DespawnTooltip()
     {
         // Hide tooltipPanel
-        tooltipEnabled = false;
         tooltipPanel.style.display = DisplayStyle.None;
+        tooltipPanel.pickingMode = PickingMode.Ignore;
+        tooltipEnabled = false;
+
     }
 
     private void ChangeText(Card card)
@@ -84,7 +89,7 @@ public class TooltipManager : MonoBehaviour
         VisualElement line = root.Q<VisualElement>("LineChange");
 
         bindDescription.style.display =
-            (card.bindDescription.Trim() == "On Bind: No effect." || card.bindDescription.Trim() == "") ? DisplayStyle.None : DisplayStyle.Flex;
+            (card.bindDescription.Trim() == "On Bind: No effect." || card.castDescription.Trim() == "") ? DisplayStyle.None : DisplayStyle.Flex;
 
         castDescription.style.display =
             (card.castDescription.Trim() == "On Cast: No effect." || card.castDescription.Trim() == "") ? DisplayStyle.None : DisplayStyle.Flex;
@@ -102,5 +107,6 @@ public class TooltipManager : MonoBehaviour
         bindDescription.text = card.bindDescription;
         manaCost.text = card.manaCost.ToString();
     }
+
 
 }

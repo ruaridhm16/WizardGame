@@ -150,18 +150,19 @@ public class CardInteractions : MonoBehaviour
     {
         if (isSelected)
         {
-            transform.position -= new Vector3(0, 0.2f, 0);
+            transform.position -= new Vector3(-0.1f, 0.2f, 0);
             DeckManager.SelectedCards.Remove(GetComponent<CardView>().card);
             DeckManager.SelectedPhysicalCards.Remove(gameObject);
         }
         else
         {
-            transform.position += new Vector3(0, 0.2f, 0);
+            transform.position += new Vector3(-0.1f, 0.2f, 0);
             DeckManager.SelectedCards.Add(GetComponent<CardView>().card);
             DeckManager.SelectedPhysicalCards.Add(gameObject);
         }
         isSelected = !isSelected;
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = isSelected;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = this.GetComponent<SpriteRenderer>().sortingOrder;
     }
 
     void EnemyBoundCardClick()

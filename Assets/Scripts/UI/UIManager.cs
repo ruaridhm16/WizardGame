@@ -68,13 +68,15 @@ public class UIManager : MonoBehaviour
     private Button summonButton;
     private Button attackButton;
 
-
     private Button passButton;
     private Button discardButton;
 
     private Label castCostLabel;
     private Label bindCostLabel;
     private Label summonCostLabel;
+
+    // NEW: remember selection at time of Cast press
+    private List<Card> castSelectionSnapshot = new List<Card>();
 
     private struct BtnSkin { public Color tint; public Color text; }
     private readonly Dictionary<Button, BtnSkin> original = new();
@@ -208,6 +210,10 @@ public class UIManager : MonoBehaviour
 
         if (!gameOverShown && currentHealth <= 0f) ShowGameOver();
 
+        // If we aren’t in the player turn or we’re dragging, targeting shouldn’t be shown
+        if (cardsDragging || BattleManager.phase != BattleManager.BattlePhase.PlayerTurn)
+            ClearTargeting();
+
         UpdateButtonsNow();
         UpdateCostsNow();
         previousHealth = currentHealth;
@@ -264,7 +270,6 @@ public class UIManager : MonoBehaviour
     {
         if (manaRegenText != null)
         {
-
             manaRegenText.text = $"+{Mathf.RoundToInt(displayedManaRegen)}";
         }
     }
@@ -354,6 +359,31 @@ public class UIManager : MonoBehaviour
     void SelectCheck()
     {
         cardsSelected = (DeckManager.SelectedCards.Count > 0);
+
+        // If we are in targeting mode, cancel it if the current selection differs from the snapshot.
+        if (showAttackButton && !AreSelectionsEqual(castSelectionSnapshot, DeckManager.SelectedCards))
+        {
+            ClearTargeting();
+        }
+    }
+
+    // Compares lists by count and element equality (order matters to be strict)
+    private bool AreSelectionsEqual(List<Card> a, List<Card> b)
+    {
+        if (a == null || b == null) return false;
+        if (a.Count != b.Count) return false;
+        for (int i = 0; i < a.Count; i++)
+        {
+            if (a[i] != b[i]) return false;
+        }
+        return true;
+    }
+
+    // Hide attack button and clear the snapshot
+    private void ClearTargeting()
+    {
+        showAttackButton = false;
+        castSelectionSnapshot.Clear();
     }
 
     void ManaCostCheck()
@@ -392,11 +422,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OnSettingsButtonClicked() 
+    private void OnSettingsButtonClicked()
     {
         settingsShown = true;
         settingsScreen.style.display = DisplayStyle.Flex;
-        Debug.Log("Settings pressed"); 
+        Debug.Log("Settings pressed");
     }
 
     private void OnSettingsBackButtonClicked()
@@ -459,6 +489,7 @@ public class UIManager : MonoBehaviour
             Show(summonButton, false);
             Show(passButton, false);
             Show(discardButton, false);
+            ClearTargeting();
             return;
         }
 
@@ -483,13 +514,23 @@ public class UIManager : MonoBehaviour
         bool canCast = castable && !castExpensive;
         bool canBind = bindable && !bindExpensive;
         bool canSummon = summonable && !summonExpensive;
-        bool canDiscard = cardsSelected; // NEW discard logic
+        bool canDiscard = cardsSelected;
 
-        SetDisabled(castButton, !canCast);
-        SetDisabled(bindButton, !canBind);
+        if (showAttackButton)
+        {
+            SetDisabled(castButton, true);
+            SetDisabled(bindButton, true);
+        }
+        else
+        {
+            SetDisabled(castButton, !canCast);
+            SetDisabled(bindButton, !canBind);
+        }
+
         SetDisabled(summonButton, !canSummon);
         SetDisabled(discardButton, !canDiscard);
     }
+
 
     private void UpdateCostsNow()
     {
@@ -545,38 +586,47 @@ public class UIManager : MonoBehaviour
 
         if (aimRequired)
         {
+            // snapshot current selection and enter targeting mode
+            castSelectionSnapshot = new List<Card>(DeckManager.SelectedCards);
             showAttackButton = true;
         }
-        else { GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.Opponent); }
-        
+        else
+        {
+            GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.Opponent);
+            ClearTargeting();
+        }
     }
+
 
     private void OnAttack()
     {
         GetComponent<PlayerCardActions>().CastSelectedCards(BattleManager.CastTargets.Opponent);
-        showAttackButton = false;
+        ClearTargeting();
     }
 
     private void OnBind()
     {
         GetComponent<PlayerCardActions>().BindSelectedCards();
+        ClearTargeting();
     }
 
     private void OnSummon()
     {
         int space = PlayerValueManager.handDrawSize - DeckManager.Hand.Count;
         int cardsInDeck = DeckManager.Deck.Count;
-
         GetComponent<PlayerCardActions>().SummonCards(space, cardsInDeck);
+        ClearTargeting();
     }
 
     private void OnPass()
     {
         GameObject.Find("BattleManager").GetComponent<BattleManager>().playerTurnComplete = true;
+        ClearTargeting();
     }
 
     private void OnDiscard()
     {
         GetComponent<PlayerCardActions>().DiscardSelectedCards();
+        ClearTargeting();
     }
 }
