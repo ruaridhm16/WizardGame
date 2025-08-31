@@ -42,6 +42,7 @@ public class EnemyCardActions : CardActions
 
         physicalCard.GetComponent<CardInteractions>().isClickable = false;
         physicalCard.GetComponent<CardInteractions>().isDraggable = false;
+        physicalCard.GetComponent<CardInteractions>().isTooltipable = false;
 
         card.isFlipped = true;
         card.isPlayerCard = false;
@@ -145,7 +146,7 @@ public class EnemyCardActions : CardActions
         enemyManager.enemyHand.Remove(card);
         enemyManager.enemyHandCards.Remove(physicalCard);
     }
-    
+
     public override void SummonCards(int space, int cardsInDeck)
     {
         if (space > 1 && cardsInDeck >= 2)

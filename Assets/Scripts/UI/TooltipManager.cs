@@ -20,7 +20,7 @@ public class TooltipManager : MonoBehaviour
     private Label castDescription;
     private Label bindDescription;
     private Label manaCost;
-    
+
 
 
 
@@ -80,13 +80,27 @@ public class TooltipManager : MonoBehaviour
         spellDescription = root.Q<Label>("SpellDescription");
         castDescription = root.Q<Label>("CastDescription");
         bindDescription = root.Q<Label>("BindDescription");
-        manaCost= root.Q<Label>("ManaCost");
+        manaCost = root.Q<Label>("ManaCost");
+        VisualElement line = root.Q<VisualElement>("LineChange");
+
+        bindDescription.style.display =
+            (card.bindDescription.Trim() == "On Bind: No effect.") ? DisplayStyle.None : DisplayStyle.Flex;
+
+        castDescription.style.display =
+            (card.castDescription.Trim() == "On Cast: No effect.") ? DisplayStyle.None : DisplayStyle.Flex;
+
+        // Line is only visible if BOTH cast + bind descriptions are visible
+        line.style.display =
+            (castDescription.style.display == DisplayStyle.Flex &&
+             bindDescription.style.display == DisplayStyle.Flex)
+            ? DisplayStyle.Flex
+            : DisplayStyle.None;
 
         spellName.text = card.cardName;
         spellDescription.text = card.cardDescription;
         castDescription.text = card.castDescription;
         bindDescription.text = card.bindDescription;
         manaCost.text = card.manaCost.ToString();
-
     }
+
 }

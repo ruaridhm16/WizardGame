@@ -16,6 +16,7 @@ public class CardInteractions : MonoBehaviour
 
     public bool isDraggable = true;
     public bool isClickable = true;
+    public bool isTooltipable = true;
 
     [Header("Config")]
     public float dragThreshold = 0.15f;
@@ -179,6 +180,7 @@ public class CardInteractions : MonoBehaviour
     }
     void OnRightClick()
     {
+        if (!isTooltipable) { return; }
         TooltipManager tooltipManager = FindFirstObjectByType<BattleManager>().GetComponent<TooltipManager>();
 
         if (tooltipManager.lastClicked == this.gameObject && tooltipManager.tooltipEnabled)
