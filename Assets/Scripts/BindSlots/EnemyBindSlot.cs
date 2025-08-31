@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemyBindSlot : MonoBehaviour
 {
     public EnemyManager enemyManager;
-    [HideInInspector] public bool occupied = false;
-    [HideInInspector] public bool disabled = false;
+     public bool occupied = false;
+    public bool disabled = false;
     [HideInInspector] public Card boundCard;
     void Start()
     {
@@ -13,11 +13,8 @@ public class EnemyBindSlot : MonoBehaviour
     }
 
 
-    private void OnTurnEnd()
+    void Update()
     {
-        if (occupied)
-        {
-            Debug.Log(this.name + " activated " + boundCard.cardName);
-        }
+        if(transform.childCount > 0) { occupied = true; } else { occupied = false; }
     }
 }

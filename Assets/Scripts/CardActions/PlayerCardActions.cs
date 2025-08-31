@@ -49,6 +49,7 @@ public class PlayerCardActions : CardActions
     public override void CastSelectedCards(BattleManager.CastTargets castTarget)
     {
         int cost = CalculateCastBindManaCost(DeckManager.SelectedCards);
+        
 
         foreach (Card card in DeckManager.SelectedCards)
         {
@@ -62,7 +63,7 @@ public class PlayerCardActions : CardActions
             Destroy(physicalCard);
         }
 
-        GetComponent<BattleManager>().lastCast = DeckManager.SelectedCards;
+        GetComponent<BattleManager>().lastCast = new List<Card>(DeckManager.SelectedCards);
 
         DeckManager.SelectedCards.Clear();
         DeckManager.SelectedPhysicalCards.Clear();

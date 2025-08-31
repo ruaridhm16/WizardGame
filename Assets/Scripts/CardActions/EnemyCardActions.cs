@@ -59,6 +59,7 @@ public class EnemyCardActions : CardActions
     public override void CastSelectedCards(BattleManager.CastTargets castTarget)
     {
         int cost = CalculateCastBindManaCost(enemyManager.enemySelectedCards);
+        
 
         foreach (Card card in enemyManager.enemySelectedCards)
         {
@@ -71,7 +72,7 @@ public class EnemyCardActions : CardActions
             card.spawnedCard = null;
             Destroy(physicalCard);
         }
-        GetComponent<BattleManager>().lastCast = DeckManager.SelectedCards;
+        GetComponent<BattleManager>().lastCast = new List<Card>(enemyManager.enemySelectedCards);
         enemyManager.enemySelectedCards.Clear();
         enemyManager.enemySelectedPhysicalCards.Clear();
         enemyManager.enemyHandZone.GetComponent<HandManager>().UpdateHandView();
@@ -113,8 +114,6 @@ public class EnemyCardActions : CardActions
             Card card = enemyManager.enemySelectedCards[0];
 
             GameObject physicalCard = card.spawnedCard;
-
-            print(enemyManager.BoundSlots.Count);
             GameObject targetParent = enemyManager.BoundSlots.Find(o => o.GetComponent<EnemyBindSlot>().occupied == false);
 
             Bind(card, targetParent);

@@ -812,7 +812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &619394800
@@ -1645,7 +1644,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &954792539
@@ -2061,6 +2059,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1117104884}
   - component: {fileID: 1117104883}
+  - component: {fileID: 1117104891}
   - component: {fileID: 1117104890}
   - component: {fileID: 1117104886}
   - component: {fileID: 1117104885}
@@ -2112,6 +2111,8 @@ MonoBehaviour:
   phase: 0
   playerCastTarget: 4
   enemyCastTarget: 4
+  statementSelectedCards: []
+  statementLastCast: []
 --- !u!4 &1117104884
 Transform:
   m_ObjectHideFlags: 0
@@ -2150,7 +2151,7 @@ MonoBehaviour:
   castExpensive: 0
   summonExpensive: 0
   bindExpensive: 0
-  showAttackButton: 0
+  targetingMode: 0
   uiDocument: {fileID: 1482831032}
 --- !u!114 &1117104886
 MonoBehaviour:
@@ -2236,6 +2237,19 @@ MonoBehaviour:
   uiDocument: {fileID: 1482831032}
   tooltipEnabled: 0
   lastClicked: {fileID: 0}
+--- !u!114 &1117104891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117104882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8617449ead993fe43b86fe7a50486ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PopUpPrefab: {fileID: 4290893198110057128, guid: 5ae41149ddcc44140b84d1334a0b0001, type: 3}
 --- !u!1 &1243650666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,7 +2437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &1406855340
@@ -2732,7 +2745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &1482831031
@@ -3099,7 +3111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &1833857390
@@ -3202,7 +3213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &1857844719
@@ -3408,7 +3418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &1897435415
@@ -3511,7 +3520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be960706375ca6049bebd921d2ab6c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleManager: {fileID: 0}
   occupied: 0
   disabled: 0
 --- !u!1 &1929158227

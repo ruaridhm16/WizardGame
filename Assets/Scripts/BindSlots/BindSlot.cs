@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class BindSlot : MonoBehaviour
 {
-    public BattleManager battleManager;
-    [HideInInspector] public bool occupied = false;
-    [HideInInspector] public bool disabled = false;
-    [HideInInspector] public Card boundCard = null;
+    public bool occupied = false;
+    public bool disabled = false;
+    public Card boundCard = null;
     void Start()
     {
         DeckManager.BoundSlots.Add(this.gameObject);
@@ -22,4 +21,10 @@ public class BindSlot : MonoBehaviour
             boundCard.OnBindPassive();
         }
     }
+
+    void Update()
+    {
+        if(transform.childCount > 0) { occupied = true; } else { occupied = false; }
+    }
+
 }

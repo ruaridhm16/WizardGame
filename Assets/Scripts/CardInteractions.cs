@@ -21,6 +21,13 @@ public class CardInteractions : MonoBehaviour
     [Header("Config")]
     public float dragThreshold = 0.15f;
 
+    private UIManager UIManager;
+
+    void Start()
+    {
+        UIManager = FindFirstObjectByType<BattleManager>().GetComponent<UIManager>();
+    }
+
     void OnMouseDown()
     {
         if (Input.GetMouseButtonDown(0))
@@ -136,6 +143,20 @@ public class CardInteractions : MonoBehaviour
         {
             OnRightClick();
         }
+
+        if (isClickable && !card.isPlayerCard && UIManager.targetingMode)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (isClickable && !card.isPlayerCard)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        }
+        
     }
 
     public void Deselect()

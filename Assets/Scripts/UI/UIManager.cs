@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     private bool castable = true;
     private bool summonable = true;
 
-    public bool showAttackButton = false;
+    public bool targetingMode = false;
 
     private Label playerHealthText;
     private VisualElement playerHealthBar;
@@ -241,7 +241,7 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        bindable = (freeSlots >= selectedCount && selectedCount > 0 && selectedCount <= 3);
+        bindable = freeSlots >= selectedCount && selectedCount > 0 && selectedCount <= 3;
     }
 
     private void UpdateHealthUI(float maxHealth)
@@ -361,7 +361,7 @@ public class UIManager : MonoBehaviour
         cardsSelected = (DeckManager.SelectedCards.Count > 0);
 
         // If we are in targeting mode, cancel it if the current selection differs from the snapshot.
-        if (showAttackButton && !AreSelectionsEqual(castSelectionSnapshot, DeckManager.SelectedCards))
+        if (targetingMode && !AreSelectionsEqual(castSelectionSnapshot, DeckManager.SelectedCards))
         {
             ClearTargeting();
         }
@@ -382,7 +382,7 @@ public class UIManager : MonoBehaviour
     // Hide attack button and clear the snapshot
     private void ClearTargeting()
     {
-        showAttackButton = false;
+        targetingMode = false;
         castSelectionSnapshot.Clear();
     }
 
@@ -478,7 +478,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateButtonsNow()
     {
-        Show(attackButton, showAttackButton);
+        Show(attackButton, targetingMode);
 
         if (castButton == null || bindButton == null || summonButton == null || passButton == null || discardButton == null) return;
 
@@ -516,7 +516,7 @@ public class UIManager : MonoBehaviour
         bool canSummon = summonable && !summonExpensive;
         bool canDiscard = cardsSelected;
 
-        if (showAttackButton)
+        if (targetingMode)
         {
             SetDisabled(castButton, true);
             SetDisabled(bindButton, true);
@@ -588,7 +588,7 @@ public class UIManager : MonoBehaviour
         {
             // snapshot current selection and enter targeting mode
             castSelectionSnapshot = new List<Card>(DeckManager.SelectedCards);
-            showAttackButton = true;
+            targetingMode = true;
         }
         else
         {

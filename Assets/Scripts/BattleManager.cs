@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Unity.Mathematics;
 using UnityEngine;
@@ -40,6 +41,8 @@ public class BattleManager : MonoBehaviour
     //LETTING THE CARD SCRIPTS KNOW WHAT CARD IS THE TARGET
     public Card TargetedCard = null;
 
+    
+
     public enum BattlePhase
     {
         PlayerTurn,
@@ -67,8 +70,10 @@ public class BattleManager : MonoBehaviour
     public CastTargets playerCastTarget = CastTargets.None;
     public CastTargets enemyCastTarget = CastTargets.None;
 
-    public List<Card> lastCast;
+    public List<Card> lastCast = new List<Card>();
     
+    [Header("Debugging")] [SerializeField] public List<string> statementSelectedCards;
+    [SerializeField] public List<string> statementLastCast;
 
     void Start()
     {
@@ -189,7 +194,7 @@ public class BattleManager : MonoBehaviour
 
     public void EnterPlayerAnimation()
     {
-        GetComponent<UIManager>().showAttackButton = false;
+        GetComponent<UIManager>().targetingMode = false;
         playerTurnComplete = false;
         phase = BattlePhase.PlayerTurnAnimations;
 
@@ -245,6 +250,22 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(AwaitBoolean(() => true, () => StartCoroutine(PhaseTimeout(1))));
     }
 
+    void DebuggingSelectedandLastCast()
+    {
+        statementSelectedCards.Clear();
+
+        foreach (Card selectedcard in DeckManager.SelectedCards)
+        {
+            statementSelectedCards.Add(selectedcard.cardName);
+        }
+        
+        statementLastCast.Clear();
+
+        foreach (Card lastcard in lastCast)
+        {
+            statementLastCast.Add(lastcard.cardName);
+        }
     
+    } 
 }
 
