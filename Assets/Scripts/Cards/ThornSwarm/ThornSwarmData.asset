@@ -16,7 +16,11 @@ MonoBehaviour:
   manaCost: 2
   cardFace: {fileID: -3175694221896100207, guid: 5254ff10814d441499ba59c14ac5f497, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  decription: Deadly thorns of poison
+  cardDescription: An entanglement of vines sharpened by centuries of malice, tipped
+    with steel-hard thorns. Once unleashed, the swarm writhes across the battlefield,
+    shredding anything caught within its grasp.
+  bindDescription: 'On Bind: No effect.'
+  castDescription: 'On Cast: Summons a surge of thorns, dealing 3 damage.'
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 00000000030000000400000008000000

@@ -16,7 +16,11 @@ MonoBehaviour:
   manaCost: 2
   cardFace: {fileID: 4498156287151450404, guid: c47700179d1acc249a0ff8901cbb6413, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  decription: THUNDER
+  cardDescription: 'A shard of divine wrath torn straight from the storm. The strike
+    carries the roar of distant gods, a flash of unearthly light, and the promise
+    of ruin for those who stand against it. '
+  bindDescription: 'On Bind: No effect.'
+  castDescription: 'On Cast: Calls down lightning, dealing 8 damage.'
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 000000000300000008000000

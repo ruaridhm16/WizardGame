@@ -16,7 +16,11 @@ MonoBehaviour:
   manaCost: 2
   cardFace: {fileID: 3437681869091466428, guid: d9727b31eceeed24ea29c23d21342ea9, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  decription: Magical Mirror that reflects a portion of damae on destruction
+  cardDescription: Forged in the age of forgotten queens, its silvered surface has
+    seen kingdoms rise and fall. To gaze into it is to see not yourself, but the
+    fate of those who dare strike you.
+  bindDescription: 'On Bind: Reflects any attack directed at it. (Not yet implemented)'
+  castDescription: 'On Cast: No effect.'
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 010000000900000007000000

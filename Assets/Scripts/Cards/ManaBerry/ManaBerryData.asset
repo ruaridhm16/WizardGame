@@ -16,8 +16,11 @@ MonoBehaviour:
   manaCost: 2
   cardFace: {fileID: 418848743015960761, guid: e6e5d29efaaeb8644a9313ca451c0871, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  decription: Exotic magical fruit of the forbidden forrest, will slowly add mana
-    restoration if planted
+  cardDescription: Plucked from hidden groves deep within the dark elven lands, these
+    shimmering fruits pulse with liquid magic. Their taste is sharp, their afterglow
+    addictive, and their power undeniable.
+  bindDescription: 'On Bind: Provides +1 mana each round as it continues to grow.'
+  castDescription: 'On Cast: Grants 3 mana instantly.'
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 010000000600000007000000

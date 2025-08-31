@@ -84,10 +84,10 @@ public class TooltipManager : MonoBehaviour
         VisualElement line = root.Q<VisualElement>("LineChange");
 
         bindDescription.style.display =
-            (card.bindDescription.Trim() == "On Bind: No effect.") ? DisplayStyle.None : DisplayStyle.Flex;
+            (card.bindDescription.Trim() == "On Bind: No effect." || card.bindDescription.Trim() == "") ? DisplayStyle.None : DisplayStyle.Flex;
 
         castDescription.style.display =
-            (card.castDescription.Trim() == "On Cast: No effect.") ? DisplayStyle.None : DisplayStyle.Flex;
+            (card.castDescription.Trim() == "On Cast: No effect." || card.castDescription.Trim() == "") ? DisplayStyle.None : DisplayStyle.Flex;
 
         // Line is only visible if BOTH cast + bind descriptions are visible
         line.style.display =

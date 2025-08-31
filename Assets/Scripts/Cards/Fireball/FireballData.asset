@@ -16,7 +16,11 @@ MonoBehaviour:
   manaCost: 2
   cardFace: {fileID: 2429319946959866025, guid: 2ed167a208e12cf4594867c3be2d7f00, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  decription: Burning ball of pure fire
+  cardDescription: "The hallmark of every mage\u2019s arsenal, a burning globe of
+    flame that scorches with both heat and fury. Though simple in design, the spell\u2019s
+    destructive power has ended wars and ignited legends."
+  bindDescription: 'On Bind: No effect.'
+  castDescription: 'On Cast: Conjures a flaming projectile, dealing 4 damage.'
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 000000000300000008000000

@@ -16,8 +16,12 @@ MonoBehaviour:
   manaCost: 2
   cardFace: {fileID: 8054933273683047914, guid: 2dceb57548adda64087adcbc4d9c7a02, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  decription: Glowing orb of pure darkness, will damage enemies and shroud their
-    spells in darknesss
+  cardDescription: A swirling mass of shadow that seems to drink in the very light
+    around it. Legends say the orb is a fragment of night itself, broken free from
+    the sky and bound into a sphere of pure malice.
+  bindDescription: 'On Bind: No effect.'
+  castDescription: 'On Cast: Unleashes a ray of blinding darkness, dealing 5 damage
+    to the enemy. '
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 000000000300000008000000

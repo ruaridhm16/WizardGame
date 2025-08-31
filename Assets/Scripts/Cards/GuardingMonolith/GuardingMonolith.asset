@@ -16,9 +16,12 @@ MonoBehaviour:
   manaCost: 3
   cardFace: {fileID: 946396878364793724, guid: e068d45c06f420f48a7f2872d6a842e3, type: 3}
   cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
-  cardDecription: 
-  bindDecription: 
-  castDecription: 
+  cardDescription: This viscous emerald salve was said to be gifted by the spirits
+    of the earth. Thick, glowing, and strangely warm, its essence can mend wounds
+    that even time cannot heal.
+  bindDescription: 'On Bind: Shields an allied bound card, absorbing one incoming
+    attack. (Not yet implemented)'
+  castDescription: 'On Cast: No effect.'
   baseCardHealth: 10
   isPlayerCard: 0
   BaseCardAttributes: 010000000500000007000000
