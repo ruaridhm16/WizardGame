@@ -132,6 +132,7 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
+            if (card == null) { Debug.Log("card null, " + card); return; }
             enemyManager.enemyDeck.Add(card.CreateInstance(this.GetComponent<BattleManager>()));
         }
     }
