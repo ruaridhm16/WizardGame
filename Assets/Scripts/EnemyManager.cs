@@ -65,7 +65,7 @@ public class EnemyManager : MonoBehaviour
         if (mana <= 0) { return true; }
         if (mana == 1 && PercentageChance(75)) { return true; }
         if (mana == 2 && PercentageChance(50)) { return true; }
-        if ((mana <= 4) && PercentageChance(20)) { return true; }
+        if ((mana <= 4) && PercentageChance(15)) { return true; }
         if ((mana <= 6) && PercentageChance(5)) { return true; }
         return false;
     }
@@ -81,6 +81,16 @@ public class EnemyManager : MonoBehaviour
 
     public bool doBind()
     {
+        int numSlots = 0;
+        foreach (GameObject slot in BoundSlots) {
+            if (!slot.GetComponent<EnemyBindSlot>().occupied)
+            {
+                numSlots += 1;
+            }
+        }
+        if (numSlots == 0) return false;
+
+
         int chance = 20;
         foreach (Card card in enemyHand)
         {
@@ -166,6 +176,14 @@ public class EnemyManager : MonoBehaviour
 
     public void CastCards()
     {
+        int chanceTargetBoundCard = 30;
+        int numBound = 0;
+        foreach (GameObject slot in DeckManager.BoundSlots) {
+            if (slot.GetComponent<BindSlot>().occupied) {
+                numBound += 1;
+            }
+        }
+
         int currentTotalManaCost = 0;
 
         for (int i = 0; i < enemyHand.Count; i++)
@@ -185,7 +203,29 @@ public class EnemyManager : MonoBehaviour
             enemySelectedPhysicalCards.Add(enemyHand[a].spawnedCard);
         }
 
-        enemyCardActions.CastSelectedCards(BattleManager.CastTargets.Player);
+        if (numBound == 0) chanceTargetBoundCard = 0;
+        else chanceTargetBoundCard += 10 * numBound;
+
+        if (PercentageChance(chanceTargetBoundCard))
+        {
+
+            List<Card> boundPlayerCards = new List<Card>();
+            foreach (GameObject slot in DeckManager.BoundSlots)
+            {
+                if (slot.GetComponent<BindSlot>().occupied)
+                {
+                    boundPlayerCards.Add(slot.GetComponent<BindSlot>().boundCard);
+                }
+            }
+
+            battleManager.TargetedCard = boundPlayerCards[UnityEngine.Random.Range(0, boundPlayerCards.Count)];
+            enemyCardActions.CastSelectedCards(BattleManager.CastTargets.PlayerBoundCard);
+        }
+        else
+        {
+            enemyCardActions.CastSelectedCards(BattleManager.CastTargets.Player);
+        }
+
         battleManager.enemyTurnComplete = true;
     }
 

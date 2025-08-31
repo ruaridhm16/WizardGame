@@ -21,7 +21,7 @@ MonoBehaviour:
     that even time cannot heal.
   bindDescription: 'On Bind: No effect.'
   castDescription: 'On Cast: Restores 5 health to yourself.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 010000000200000008000000
   baseHealAmount: 5

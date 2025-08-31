@@ -2061,6 +2061,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1117104884}
   - component: {fileID: 1117104883}
+  - component: {fileID: 1117104890}
   - component: {fileID: 1117104886}
   - component: {fileID: 1117104885}
   - component: {fileID: 1117104889}
@@ -2099,7 +2100,7 @@ MonoBehaviour:
   DarkOrbSO: {fileID: 11400000, guid: fb9a3d6ddde32bc40bb89688485e9d9d, type: 2}
   numThornSwarm: 3
   ThrornSwarmSO: {fileID: 11400000, guid: a03ea3b36bc57b642b5cecc01f05794d, type: 2}
-  numGuardingMonolith: 4
+  numGuardingMonolith: 2
   guardingMonolithSO: {fileID: 11400000, guid: 412c8273facd2424aa7d33f30edd24a7, type: 2}
   PlayerCardActions: {fileID: 1117104889}
   EnemyCardActions: {fileID: 1117104888}
@@ -2220,6 +2221,21 @@ MonoBehaviour:
   cardPrefab: {fileID: 3845595278142565958, guid: 3671adc888b61bc459a2d5404e46324d, type: 3}
   handManager: {fileID: 220450783}
   handZone: {fileID: 220450780}
+--- !u!114 &1117104890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117104882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9f36f9f25884a488ecfb619fa107bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 1482831032}
+  tooltipEnabled: 0
+  lastClicked: {fileID: 0}
 --- !u!1 &1243650666
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ MonoBehaviour:
     of ruin for those who stand against it. '
   bindDescription: 'On Bind: No effect.'
   castDescription: 'On Cast: Calls down lightning, dealing 8 damage.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 000000000300000008000000
   baseDamage: 8

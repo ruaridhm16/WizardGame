@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1153ffe4f811403468c33766a3d6bfb6
+guid: 4a7b34982f279e244bb726e2b1ce8ec7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4498156287151450404
-    second: ThunderStrike_0
+      213: 5149334660595505435
+    second: GammaCharger 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ThunderStrike_0
+      name: GammaCharger 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4292ad79f49ac6e30800000000000000
-      internalID: 4498156287151450404
+      spriteID: b19d66a679c167740800000000000000
+      internalID: 5149334660595505435
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ThunderStrike_0: 4498156287151450404
+      GammaCharger 1_0: 5149334660595505435
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

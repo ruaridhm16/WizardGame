@@ -22,7 +22,7 @@ MonoBehaviour:
   bindDescription: 'On Bind: No effect.'
   castDescription: 'On Cast: Unleashes a ray of blinding darkness, dealing 5 damage
     to the enemy. '
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 000000000300000008000000
   baseDamage: 5

@@ -66,6 +66,8 @@ public class BattleManager : MonoBehaviour
 
     public CastTargets playerCastTarget = CastTargets.None;
     public CastTargets enemyCastTarget = CastTargets.None;
+
+    public List<Card> lastCast;
     
 
     void Start()
@@ -92,9 +94,9 @@ public class BattleManager : MonoBehaviour
         AddEnemyNumCards(UnityEngine.Random.Range(10, 20), FireballSO);
         AddEnemyNumCards(UnityEngine.Random.Range(6, 15), LifegelSO);
         AddEnemyNumCards(UnityEngine.Random.Range(2, 5), ManaBerrySO);
-        AddEnemyNumCards(UnityEngine.Random.Range(0, 9), DarkOrbSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(0, 6), DarkOrbSO);
         AddEnemyNumCards(UnityEngine.Random.Range(0, 4), ThunderStrikeSO);
-        AddEnemyNumCards(UnityEngine.Random.Range(0, 3), EnchantedMirrorSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(5, 8), EnchantedMirrorSO);
         AddEnemyNumCards(UnityEngine.Random.Range(0, 9), ThrornSwarmSO);
         AddEnemyNumCards(UnityEngine.Random.Range(0, 4), guardingMonolithSO);
 

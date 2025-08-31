@@ -8,7 +8,6 @@ public class Lifegel : Card
     {
         switch (target)
         {
-            //Target = Player ->  gives the player health
             case BattleManager.CastTargets.Player:
                 battleManager.enemyManager.healEnemy(healAmount);
                 break;

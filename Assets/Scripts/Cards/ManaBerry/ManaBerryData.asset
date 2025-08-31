@@ -21,7 +21,7 @@ MonoBehaviour:
     addictive, and their power undeniable.
   bindDescription: 'On Bind: Provides +1 mana each round as it continues to grow.'
   castDescription: 'On Cast: Grants 3 mana instantly.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 010000000600000007000000
   baseManaRestore: 1

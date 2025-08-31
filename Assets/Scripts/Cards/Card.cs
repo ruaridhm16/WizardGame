@@ -47,8 +47,18 @@ public abstract class Card
     {
         if (attatchedBindSlot != null)
         {
-            attatchedBindSlot.GetComponent<BindSlot>().boundCard = null;
-            attatchedBindSlot.GetComponent<BindSlot>().occupied = false;
+            if (isPlayerCard)
+            {
+                attatchedBindSlot.GetComponent<BindSlot>().boundCard = null;
+                attatchedBindSlot.GetComponent<BindSlot>().occupied = false;
+                attatchedBindSlot = null;
+            }
+            else
+            {
+                attatchedBindSlot.GetComponent<EnemyBindSlot>().boundCard = null;
+                attatchedBindSlot.GetComponent<EnemyBindSlot>().occupied = false;
+                attatchedBindSlot = null;
+            }
         }
         GameObject.Destroy(spawnedCard);
     }

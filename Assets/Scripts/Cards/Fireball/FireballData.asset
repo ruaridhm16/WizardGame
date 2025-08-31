@@ -21,7 +21,7 @@ MonoBehaviour:
     destructive power has ended wars and ignited legends."
   bindDescription: 'On Bind: No effect.'
   castDescription: 'On Cast: Conjures a flaming projectile, dealing 4 damage.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 000000000300000008000000
   baseDamage: 4

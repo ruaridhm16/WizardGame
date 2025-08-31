@@ -17,7 +17,7 @@ public class EnemyCardActions : CardActions
 
         for (int i = 0; i < PlayerValueManager.handDrawSize; i++)
         {
-            DrawCard(enemyManager.enemyDeck[UnityEngine.Random.Range(0, enemyManager.enemyHand.Count - 1)]);
+            DrawCard(enemyManager.enemyDeck[UnityEngine.Random.Range(0, enemyManager.enemyDeck.Count - 1)]);
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -71,6 +71,7 @@ public class EnemyCardActions : CardActions
             card.spawnedCard = null;
             Destroy(physicalCard);
         }
+        GetComponent<BattleManager>().lastCast = DeckManager.SelectedCards;
         enemyManager.enemySelectedCards.Clear();
         enemyManager.enemySelectedPhysicalCards.Clear();
         enemyManager.enemyHandZone.GetComponent<HandManager>().UpdateHandView();
@@ -117,6 +118,7 @@ public class EnemyCardActions : CardActions
             GameObject targetParent = enemyManager.BoundSlots.Find(o => o.GetComponent<EnemyBindSlot>().occupied == false);
 
             Bind(card, targetParent);
+            card.attatchedBindSlot = targetParent;
             card.OnBind(false);
 
             enemyManager.enemySelectedPhysicalCards.Remove(physicalCard);
@@ -142,6 +144,8 @@ public class EnemyCardActions : CardActions
 
         physicalCard.GetComponent<CardInteractions>().Deselect();
         physicalCard.GetComponent<CardInteractions>().isClickable = true;
+
+        physicalCard.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
         enemyManager.enemyHand.Remove(card);
         enemyManager.enemyHandCards.Remove(physicalCard);

@@ -15,8 +15,10 @@ public class ThunderStrike : Card
                 battleManager.enemyManager.DealDamage(damage);
                 break;
             case BattleManager.CastTargets.PlayerBoundCard:
+                battleManager.TargetedCard.DamageCard(damage);
                 break;
             case BattleManager.CastTargets.OpponentBoundCard:
+                battleManager.TargetedCard.DamageCard(damage);
                 break;
         }
     }

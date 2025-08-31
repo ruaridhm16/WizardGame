@@ -21,7 +21,7 @@ MonoBehaviour:
     fate of those who dare strike you.
   bindDescription: 'On Bind: Reflects any attack directed at it. (Not yet implemented)'
   castDescription: 'On Cast: No effect.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 010000000900000007000000
   damageReflectionPeercentge: 5

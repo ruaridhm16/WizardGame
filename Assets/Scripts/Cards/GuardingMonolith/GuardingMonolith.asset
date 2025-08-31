@@ -22,7 +22,7 @@ MonoBehaviour:
   bindDescription: 'On Bind: Shields an allied bound card, absorbing one incoming
     attack. (Not yet implemented)'
   castDescription: 'On Cast: No effect.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 010000000500000007000000
   baseProtection: 10

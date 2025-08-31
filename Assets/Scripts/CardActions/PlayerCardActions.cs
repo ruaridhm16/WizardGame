@@ -61,6 +61,9 @@ public class PlayerCardActions : CardActions
             card.spawnedCard = null;
             Destroy(physicalCard);
         }
+
+        GetComponent<BattleManager>().lastCast = DeckManager.SelectedCards;
+
         DeckManager.SelectedCards.Clear();
         DeckManager.SelectedPhysicalCards.Clear();
         DeckManager.HandZone.GetComponent<HandManager>().UpdateHandView();
@@ -140,6 +143,8 @@ public class PlayerCardActions : CardActions
         physicalCard.GetComponent<CardInteractions>().Deselect();
         physicalCard.GetComponent<CardInteractions>().isClickable = false;
         physicalCard.GetComponent<CardInteractions>().isDraggable = false;
+
+        physicalCard.GetComponent<SpriteRenderer>().sortingOrder = 1;
 
         DeckManager.Hand.Remove(card);
         DeckManager.HandCards.Remove(physicalCard);

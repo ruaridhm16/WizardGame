@@ -21,7 +21,7 @@ MonoBehaviour:
     shredding anything caught within its grasp.
   bindDescription: 'On Bind: No effect.'
   castDescription: 'On Cast: Summons a surge of thorns, dealing 3 damage.'
-  baseCardHealth: 10
+  baseCardHealth: 5
   isPlayerCard: 0
   BaseCardAttributes: 00000000030000000400000008000000
   baseDamage: 3
