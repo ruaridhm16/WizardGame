@@ -75,7 +75,7 @@ public class EnemyManager : MonoBehaviour
         if (enemyHand.Count == 0) { return true; }
         if (enemyHand.Count <= 2 && PercentageChance(75)) {return true;}
         if (enemyHand.Count <= 4 && PercentageChance(50)) {return true;}
-        if (PercentageChance(25)) { return true;}
+        if (enemyHand.Count <= 6 && PercentageChance(25)) {return true;}
         return false;
     }
 

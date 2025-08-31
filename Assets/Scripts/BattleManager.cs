@@ -22,6 +22,8 @@ public class BattleManager : MonoBehaviour
     public DarkOrbData DarkOrbSO;
     public int numThornSwarm;
     public ThornSwarmData ThrornSwarmSO;
+    public int numGuardingMonolith;
+    public GuardingMonolithData guardingMonolithSO;
 
 
 
@@ -85,9 +87,16 @@ public class BattleManager : MonoBehaviour
         AddNumCards(numThunderStrike, ThunderStrikeSO);
         AddNumCards(numEnchantedMirror, EnchantedMirrorSO);
         AddNumCards(numThornSwarm, ThrornSwarmSO);
+        AddNumCards(numGuardingMonolith, guardingMonolithSO);
 
-        AddEnemyNumCards(15, FireballSO);
-        AddEnemyNumCards(5, LifegelSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(10, 20), FireballSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(6, 15), LifegelSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(2, 5), ManaBerrySO);
+        AddEnemyNumCards(UnityEngine.Random.Range(0, 9), DarkOrbSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(0, 4), ThunderStrikeSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(0, 3), EnchantedMirrorSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(0, 9), ThrornSwarmSO);
+        AddEnemyNumCards(UnityEngine.Random.Range(0, 4), guardingMonolithSO);
 
         DeckManager.Deck = new List<Card>(DeckManager.SetDeck);
 

@@ -36,7 +36,7 @@ public class EnemyCardActions : CardActions
         enemyManager.enemyDeck.Remove(card);
 
         SpriteRenderer sr = physicalCard.GetComponent<SpriteRenderer>();
-        sr.sprite = card.cardBack;
+        sr.sprite = card.cardFace;
         sr.enabled = true;
         physicalCard.transform.localScale = Vector2.one;
 

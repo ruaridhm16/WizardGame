@@ -7,7 +7,9 @@ public abstract class CardData : ScriptableObject
     public int manaCost;
     public Sprite cardFace;
     public Sprite cardBack;
-    public string decription;
+    public string cardDecription;
+    public string bindDecription;
+    public string castDecription;
     public int baseCardHealth = 10;
     [HideInInspector] public bool isPlayerCard;
 

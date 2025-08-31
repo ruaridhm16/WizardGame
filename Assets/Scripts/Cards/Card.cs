@@ -11,7 +11,9 @@ public abstract class Card
     public int manaCost;
     public Sprite cardFace;
     public Sprite cardBack;
-    public string decription;
+    public string cardDecription;
+    public string castDescription;
+    public string bindDescription;
     public int cardHealth;
 
     public enum CardAttribute

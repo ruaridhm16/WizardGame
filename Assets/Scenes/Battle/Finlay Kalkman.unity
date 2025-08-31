@@ -2099,6 +2099,8 @@ MonoBehaviour:
   DarkOrbSO: {fileID: 11400000, guid: fb9a3d6ddde32bc40bb89688485e9d9d, type: 2}
   numThornSwarm: 3
   ThrornSwarmSO: {fileID: 11400000, guid: a03ea3b36bc57b642b5cecc01f05794d, type: 2}
+  numGuardingMonolith: 4
+  guardingMonolithSO: {fileID: 11400000, guid: 412c8273facd2424aa7d33f30edd24a7, type: 2}
   PlayerCardActions: {fileID: 1117104889}
   EnemyCardActions: {fileID: 1117104888}
   PlayerHandZone: {fileID: 220450780}

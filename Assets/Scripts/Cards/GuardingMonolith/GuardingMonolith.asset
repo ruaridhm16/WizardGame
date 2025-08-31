@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f78669936ec43a46a936a3a9330c2be, type: 3}
+  m_Name: GuardingMonolith
+  m_EditorClassIdentifier: 
+  cardName: Guarding Monolith
+  manaCost: 3
+  cardFace: {fileID: 946396878364793724, guid: e068d45c06f420f48a7f2872d6a842e3, type: 3}
+  cardBack: {fileID: -253312676200220791, guid: 37c53cc7b15c63a4a99bf012e106e011, type: 3}
+  cardDecription: 
+  bindDecription: 
+  castDecription: 
+  baseCardHealth: 10
+  isPlayerCard: 0
+  BaseCardAttributes: 010000000500000007000000
+  baseProtection: 10
