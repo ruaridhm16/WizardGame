@@ -1,6 +1,6 @@
 # Unnamed Wizard Game
 
-A deck-building game in progress. Cards combine in different ways to create different effects — build your deck, chain combinations, cast spells.
+A deck-building game in progress. Cards combine in different ways to create different effects - build your deck, chain combinations, cast spells.
 
 Status: work in progress.
 
